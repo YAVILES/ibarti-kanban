@@ -36,15 +36,7 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getDataList();
     this.getDataStored();
-  }
-
-  getDataList(): void {
-    this.ibartiService.getStatus().subscribe(
-      (response: any) => (this.lists = response),
-      (error: string) => console.log('Ups! we have an error: ', error)
-    );
   }
 
   getDataStored(): void {
