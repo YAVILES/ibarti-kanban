@@ -13,6 +13,7 @@
     >
       <mat-icon aria-hidden="false" aria-label="close icon">close</mat-icon>
     </button>
+   
   </header>
   <section class="form__fields">
     <mat-form-field class="form__fields__item" appearance="fill">
@@ -24,11 +25,11 @@
         formControlName="cod_usuario"
       >
         <option value="" selected></option>
-        <option *ngFor="let user of users" [value]="user.value">
-          {{ user.viewValue }}
+        <option *ngFor="let user of users" [value]="user.codigo">
+          {{ user.cedula }}, {{ user.nombre }}
         </option>
       </select>
-      <mat-error> Prioridad es <strong>requerida</strong> </mat-error>
+      <mat-error> Usuario  es <strong>requerido</strong> </mat-error>
     </mat-form-field>
 
     <mat-form-field
@@ -48,14 +49,14 @@
       </textarea>
       <mat-error> El usuario es <strong>requerido</strong> </mat-error>
     </mat-form-field>
-
+    
     <button
       class="form__fields__button"
       mat-raised-button
       color="primary"
-      [disabled]="!createTask.valid"
+      (click)="save()"
     >
-    {{formText}}
+    Guardar
     </button>
   </section>
 </form>

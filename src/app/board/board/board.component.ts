@@ -37,6 +37,7 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDataStored();
+    
   }
 
   getDataStored(): void {
@@ -44,7 +45,9 @@ export class BoardComponent implements OnInit {
       .subscribe(
         (response: any) => this.lists = response,
         (error: string) => (console.log('Ups! we have an error: ', error))
+        
     );
+    
   }
 
   displayOverlay(event?: TaskSchema): void {

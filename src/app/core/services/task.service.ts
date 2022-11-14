@@ -1,18 +1,24 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IbartiService, TaskSchema, ListSchema } from '../';
+import { IbartiService, TaskSchema, ListSchema} from '../';
+import { Users} from '../models/users' 
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
+  
   private readonly boardList = new BehaviorSubject<ListSchema[]>([]);
   readonly list$ = this.boardList.asObservable();
   readonly getBoardList$ = this.list$.pipe(map((list) => list));
-
+  private readonly boardUsers = new BehaviorSubject<Users[]>([]);
+  readonly users$ = this.boardUsers.asObservable();
+  readonly getBoardUsers$ = this.users$.pipe(map((users) => users));
+  public listauasuario: Users[]=[];
   constructor(private ibartiService: IbartiService) {
     this.loadInitialData();
+    this.loadInitialDataUsuario();
   }
 
   /* Load initial data to render in a component */
@@ -30,7 +36,14 @@ export class TaskService {
       }
     });
   }
-
+  loadInitialDataUsuario(): any {
+    return this.ibartiService.getUsuarios().subscribe((data: any[]) => {
+      if (!!data) {
+        this.listauasuario= data;
+      }
+    });
+   
+  }
   /* getter list of Board */
   get list(): ListSchema[] {
     return this.boardList.getValue();
