@@ -6,6 +6,13 @@ import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment as env } from '../../../environments/environment';
 
+interface TaskEdit {
+  usuario: string, // Código de usuario en sesión
+  cod_usuario: string, // Codigo de usuario asignado a la tarea (novedad)
+  codigo: string, // Codigo de la tarea (novedad)
+  status: string // Estatus kanban de la tarea (novedad.cod_nov_status_kanban)
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,15 +27,23 @@ export class IbartiService  {
       .get<Array<{}>>(`${this.URL}/status/?usuario=1234`)
       .pipe(map(data => data), catchError(this.handleError));
   }
+
   getUsuarios() {
     return this.http
       .get<Array<{}>>(`${this.URL}/users/?usuario=1234`)
       .pipe(map(data => data), catchError(this.handleError));
   }
-  createUser(user: any): Observable<any>{
+
+  editTask(task: TaskEdit) {
+    let data =  new FormData();
+    data.append('usuario', task.usuario);
+    data.append('cod_usuario', task.cod_usuario);
+    data.append('codigo', task.codigo);
+    data.append('status', task.status);
+
     return this.http
-    .post(`${this.URL}/edit_task/?usuario=1234`, user)
-    .pipe(map(data => data), catchError(this.handleError));
+      .post(`${this.URL}edit_task/?usuario=1234`, data)
+      .pipe(map(data => data), catchError(this.handleError));
   }
   
   getTasks() {

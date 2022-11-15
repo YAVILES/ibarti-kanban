@@ -110,7 +110,7 @@ export class CreateTaskComponent implements OnInit {
   }
  
   save( ): void {
-    this.ibartiService.createUser(this.createTask.value)
+    this.ibartiService.editTask(this.createTask.value)
     .subscribe(
       (response: any) => this.users = response,
       (error: string) => (console.log('Ups! we have an error: ', error))
