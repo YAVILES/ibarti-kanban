@@ -65,7 +65,10 @@ export class CreateTaskComponent implements OnInit {
 
   setForm(): void {
     this.createTask = this.fb.group({
+      usuario:this.task?.usuario,
       cod_usuario: [this.task?.cod_usuario ? this.task.cod_usuario : "", Validators.required],
+      codigo : this.task?.codigo,
+      status: this.task?.nov_status_kanban,
       novedad: [this.task?.novedad ? this.task.novedad : ""],
     });
   }
@@ -115,6 +118,7 @@ export class CreateTaskComponent implements OnInit {
       (response: any) => this.users = response,
       (error: string) => (console.log('Ups! we have an error: ', error))
   );
+  
   }
   
 }
