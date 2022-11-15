@@ -1,5 +1,7 @@
 import { Component, Input, NgZone, OnInit, ViewChild } from '@angular/core';
+
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { TaskSchema } from 'src/app/core/';
 import { Users } from 'src/app/core/models/users';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -7,7 +9,6 @@ import { take } from 'rxjs/operators';
 import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 import { IbartiService } from 'src/app/core/services/ibarti.service';
 import { TaskService } from 'src/app/core/services/task.service';
-import { generateUniqueId } from 'src/app/shared/utils/';
 
 
 type DropdownObject = {
@@ -37,16 +38,18 @@ export class CreateTaskComponent implements OnInit {
   createTask!: FormGroup;
   selectedUser: string | undefined = "";
   users: Users[] = [ ];
-  
+  id: string = "";
 
   constructor(
     private fb: FormBuilder,
     private _ngZone: NgZone,
     private tasksService: TaskService,
     private ibartiService: IbartiService
+    
   ) { }
 
   ngOnInit(): void {
+   
    this.setForm();
     this.selectedUser = '';
     if (this.task && this.task.codigo &&  this.task.codigo.length > 0) {
@@ -74,6 +77,7 @@ export class CreateTaskComponent implements OnInit {
     );
    
   }
+
   onFormAdd(form: TaskSchema): void {
    if (this.createTask.valid && this.task && this.listId){
       const findUser = this.users.find(
@@ -104,8 +108,13 @@ export class CreateTaskComponent implements OnInit {
   close(): void {
     this.connectedOverlay.overlayRef.detach();
   }
-  save(): void {
-    this.formText="aajaja";
-    console.log(this.formText);
+ 
+  save( ): void {
+    this.ibartiService.createUser(this.createTask.value)
+    .subscribe(
+      (response: any) => this.users = response,
+      (error: string) => (console.log('Ups! we have an error: ', error))
+  );
   }
+  
 }

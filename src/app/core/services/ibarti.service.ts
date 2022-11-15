@@ -25,7 +25,12 @@ export class IbartiService  {
       .get<Array<{}>>(`${this.URL}/users/?usuario=1234`)
       .pipe(map(data => data), catchError(this.handleError));
   }
-
+  createUser(user: any): Observable<any>{
+    return this.http
+    .post(`${this.URL}/edit_task/?usuario=1234`, user)
+    .pipe(map(data => data), catchError(this.handleError));
+  }
+  
   getTasks() {
     return this.http
       .get<Array<{}>>(`${this.URL}/news/?usuario=1234`)
