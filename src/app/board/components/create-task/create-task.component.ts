@@ -39,7 +39,7 @@ export class CreateTaskComponent implements OnInit {
   selectedUser: string | undefined = "";
   users: Users[] = [ ];
   id: string = "";
-
+  status:string | undefined = "";
   constructor(
     private fb: FormBuilder,
     private _ngZone: NgZone,
@@ -56,7 +56,7 @@ export class CreateTaskComponent implements OnInit {
       // this.setValuesOnForm(this.task);
       this.formText = 'Editar';
       this.selectedUser = this.task.cod_usuario;
-      
+      this.status= this.task.nov_status_kanban;
     } else {
       this.formText = 'Crear';
     } 
@@ -68,8 +68,8 @@ export class CreateTaskComponent implements OnInit {
       usuario:this.task?.usuario,
       cod_usuario: [this.task?.cod_usuario ? this.task.cod_usuario : "", Validators.required],
       codigo : this.task?.codigo,
-      status: this.task?.nov_status_kanban,
-      novedad: [this.task?.novedad ? this.task.novedad : ""],
+      status: [this.task?.cod_nov_status_kanban ? this.task.cod_nov_status_kanban : ""],
+      novedad: [this.task?.novedad ? this.task.novedad: ""],
     });
   }
   getDatausuarios(): void {
@@ -113,6 +113,7 @@ export class CreateTaskComponent implements OnInit {
   }
  
   save( ): void {
+    console.log("POlicia Vitnan"+ this.createTask.controls["status"].value);
     this.ibartiService.editTask(this.createTask.value)
     .subscribe(
       (response: any) => this.users = response,

@@ -12,6 +12,7 @@ const initialValue = {
   codigo: '',
   novedad: '',
   fec_us_ing: '',
+  cod_nov_status_kanban :'',
 };
 @Component({
   selector: 'app-board',
@@ -57,6 +58,7 @@ export class BoardComponent implements OnInit {
         fec_us_ing: event.fec_us_ing,
         codigo: event.codigo,
         novedad: event.novedad,
+        cod_nov_status_kanban: event.cod_nov_status_kanban,
       };
       if(event.listId){
         this.listId = event.listId;

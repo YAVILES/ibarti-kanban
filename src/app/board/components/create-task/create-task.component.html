@@ -47,9 +47,27 @@
         cdkAutosizeMaxRows="5"
       >
       </textarea>
+      
       <mat-error> El usuario es <strong>requerido</strong> </mat-error>
     </mat-form-field>
-    
+    <mat-form-field
+      class="form__fields__item"
+      appearance="fill"
+      color="primary"
+    >
+      <mat-label>Estatu</mat-label>
+      <textarea
+        matInput
+        formControlName="status"
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="5"
+      >
+      </textarea>
+      
+      <mat-error> El usuario es <strong>requerido</strong> </mat-error>
+    </mat-form-field>
     <button
       class="form__fields__button"
       mat-raised-button
