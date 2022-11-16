@@ -5,6 +5,7 @@ import { ListSchema, TaskSchema } from './../../../core';
 import { IbartiService } from 'src/app/core/services/ibarti.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { TaskService } from 'src/app/core/services/task.service';
+import { getLocalStorage } from 'src/app/utils/localStorage';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -62,7 +63,7 @@ export class ListComponent implements OnInit {
   actualizartask(task: TaskSchema): void {   
     if (this.list) {
        this.ibartiService.editTask({
-        usuario: "1234", 
+        usuario: getLocalStorage('userIbartiKanban'), 
         cod_usuario: task.cod_usuario, 
         codigo: task.codigo,
         status: task.cod_nov_status_kanban 
