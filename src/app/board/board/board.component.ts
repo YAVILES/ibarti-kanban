@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { IbartiService, ListSchema, TaskSchema } from './../../core';
+import { IbartiService, ListSchema, TaskSchema, Users } from './../../core';
 import { TaskService } from 'src/app/core/services/task.service';
 import { CdkConnectedOverlay, ConnectedPosition } from '@angular/cdk/overlay';
-
-interface PartialCdkConnectedOverlay {
-  hasBackdrop: boolean,
-  positions: ConnectedPosition[]
-}
 
 const initialValue = {
   codigo: '',
   novedad: '',
   fec_us_ing: '',
+  cod_usuario: '',
   cod_nov_status_kanban :'',
 };
+
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -21,6 +18,7 @@ const initialValue = {
 })
 export class BoardComponent implements OnInit {
   lists: ListSchema[];
+  users: Users[] = [];
   task: TaskSchema;
   isOverlayDisplayed = false;
   readonly overlayOptions: Partial<CdkConnectedOverlay> = {
@@ -37,14 +35,23 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getDatausuarios();
     this.getDataStored();
-    
+  }
+
+  getDatausuarios(): void {
+    this.ibartiService.getUsuarios()
+      .subscribe(
+        (response: any) => this.users = response,
+        (error: string) => (console.log('Ups! we have an error: ', error))
+    );
+   
   }
 
   getDataStored(): void {
     this.taskService.getBoardList$
       .subscribe(
-        (response: any) => this.lists = response,
+        (response: any) => this.lists = [...response],
         (error: string) => (console.log('Ups! we have an error: ', error))
         
     );
@@ -52,12 +59,14 @@ export class BoardComponent implements OnInit {
   }
 
   displayOverlay(event?: TaskSchema): void {
+    // console.log(event);
     this.isOverlayDisplayed = true;
     if (!!event) {
       this.task = {
         fec_us_ing: event.fec_us_ing,
         codigo: event.codigo,
         novedad: event.novedad,
+        cod_usuario: event.cod_usuario,
         cod_nov_status_kanban: event.cod_nov_status_kanban,
       };
       if(event.listId){

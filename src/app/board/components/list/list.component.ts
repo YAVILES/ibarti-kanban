@@ -36,8 +36,10 @@ export class ListComponent implements OnInit {
                         event.previousIndex,
                         event.currentIndex);
     }
-    this.actualizartask();
+    this.list.tasks[event.currentIndex].cod_nov_status_kanban = this.list.codigo;
+    this.actualizartask(this.list.tasks[event.currentIndex]);
   }
+
   setForm(): void {
     this.createTask = this.fb.group({
       usuario:this.task?.usuario,
@@ -48,28 +50,27 @@ export class ListComponent implements OnInit {
     });
     console.log("POlicia Vivo"+ this.createTask.controls["usuario"].value);
   }
+
   handleEdit(task: TaskSchema){
-    
+    console.log(task, this.list);
     if (this.list) {
-    
       task.listId = this.list.codigo;
       this.editTask.emit(task);
-      }
-   
+    }
   }
   
-  actualizartask(): void {
-   
-   
+  actualizartask(task: TaskSchema): void {   
     if (this.list) {
-       this.ibartiService.editTask(this.createTask.value)
+       this.ibartiService.editTask({
+        usuario: "1234", 
+        cod_usuario: task.cod_usuario, 
+        codigo: task.codigo,
+        status: task.cod_nov_status_kanban 
+      })
       .subscribe(
-        (response: any) => this.users = response,
+        (response: any) => (console.log('guardado con exito ', response)),
         (error: string) => (console.log('Ups! we have an error: ', error))
-    );
-
-      }
-  
-  
+      );
+    }
   }
 }

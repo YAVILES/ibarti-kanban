@@ -1,11 +1,11 @@
 <form
   class="form"
   [formGroup]="createTask"
-  (ngSubmit)="onFormAdd(createTask.value)"
+  (ngSubmit)="onFormAdd()"
   novalidate
 >
   <header class="form__header">
-    <h3 class="form__header__title">{{ formText }} Tarea</h3>
+    <h3 class="form__header__title">{{ formText }} Tarea </h3>
     <button
       class="form__header__close-button"
       mat-raised-button
@@ -16,7 +16,10 @@
    
   </header>
   <section class="form__fields">
-    <mat-form-field class="form__fields__item" appearance="fill">
+    <div>
+      <p><strong>Novedad:</strong> {{ task?.novedad }}</p>
+    </div>
+    <mat-form-field appearance="fill" color="primary" class="form__fields__item">
       <mat-label>Seleccione un usuario</mat-label>
       <select
         matNativeControl
@@ -26,48 +29,12 @@
       >
         <option value="" selected></option>
         <option *ngFor="let user of users" [value]="user.codigo">
-          {{ user.cedula }}, {{ user.nombre }}
+         {{ user.nombre }} {{ user.apellido }} ( {{ user.cedula }})
         </option>
       </select>
       <mat-error> Usuario  es <strong>requerido</strong> </mat-error>
     </mat-form-field>
-
-    <mat-form-field
-      class="form__fields__item"
-      appearance="fill"
-      color="primary"
-    >
-      <mat-label>Novedad</mat-label>
-      <textarea
-        matInput
-        formControlName="novedad"
-        cdkTextareaAutosize
-        #autosize="cdkTextareaAutosize"
-        cdkAutosizeMinRows="1"
-        cdkAutosizeMaxRows="5"
-      >
-      </textarea>
-      
-      <mat-error> El usuario es <strong>requerido</strong> </mat-error>
-    </mat-form-field>
-    <mat-form-field
-      class="form__fields__item"
-      appearance="fill"
-      color="primary"
-    >
-      <mat-label>Estatu</mat-label>
-      <textarea
-        matInput
-        formControlName="status"
-        cdkTextareaAutosize
-        #autosize="cdkTextareaAutosize"
-        cdkAutosizeMinRows="1"
-        cdkAutosizeMaxRows="5"
-      >
-      </textarea>
-      
-      <mat-error> El usuario es <strong>requerido</strong> </mat-error>
-    </mat-form-field>
+    <br>
     <button
       class="form__fields__button"
       mat-raised-button

@@ -16,9 +16,9 @@ export interface TaskSchema {
   nov_status?: string;
   observacion?: string;
   respuesta?: string;
-  cod_nov_status_kanban?: string;
+  cod_nov_status_kanban: string;
   nov_status_kanban?: string;
-  cod_usuario?: string;
+  cod_usuario: string;
   usuario?: string;
   listId?: string;
 }

@@ -62,10 +62,11 @@ export class TaskService {
       );
       const task = this.list[elementsIndex].tasks.map((element) => {
         if (element.codigo === data.codigo) {
-          element.fec_us_ing = new Date(data.fec_us_ing);
+          element.cod_nov_status_kanban = listId
         }
         return element;
       });
     }
+    this.loadInitialData();
   }
 }
