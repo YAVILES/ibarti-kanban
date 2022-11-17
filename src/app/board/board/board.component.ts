@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IbartiService, ListSchema, TaskSchema, Users } from './../../core';
 import { TaskService } from 'src/app/core/services/task.service';
 import { CdkConnectedOverlay, ConnectedPosition } from '@angular/cdk/overlay';
+import { getLocalStorage } from 'src/app/utils/localStorage';
 
 const initialValue = {
   codigo: '',
@@ -60,21 +61,23 @@ export class BoardComponent implements OnInit {
 
   displayOverlay(event?: TaskSchema): void {
     // console.log(event);
-    this.isOverlayDisplayed = true;
-    if (!!event) {
-      this.task = {
-        fec_us_ing: event.fec_us_ing,
-        codigo: event.codigo,
-        novedad: event.novedad,
-        cod_usuario: event.cod_usuario,
-        cod_nov_status_kanban: event.cod_nov_status_kanban,
-      };
-      if(event.listId){
-        this.listId = event.listId;
+    if(getLocalStorage('admin_kanban') == 'T'){
+      this.isOverlayDisplayed = true;
+      if (!!event) {
+        this.task = {
+          fec_us_ing: event.fec_us_ing,
+          codigo: event.codigo,
+          novedad: event.novedad,
+          cod_usuario: event.cod_usuario,
+          cod_nov_status_kanban: event.cod_nov_status_kanban,
+        };
+        if(event.listId){
+          this.listId = event.listId;
+        }
+        
+      } else {
+        this.task = initialValue;
       }
-      
-    } else {
-      this.task = initialValue;
     }
   }
 

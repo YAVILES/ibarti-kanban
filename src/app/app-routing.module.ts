@@ -12,6 +12,10 @@ const routes: Routes = [
     //before syntax deprecated in v.8
     //loadChildren: './board/board.module#BoardModule'
     loadChildren: () => import('./board/board.module').then(m => m.BoardModule)
+  },
+  {
+    path: '**',
+    redirectTo: '/board',
   }
 ];
 

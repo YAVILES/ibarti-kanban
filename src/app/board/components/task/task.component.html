@@ -7,7 +7,7 @@
     {{task.tipo}}
     <h3>{{ task.novedad }}</h3>
   </div>
-  <button  matTooltip="Editar tarea" matTooltipClass="custom-tooltip-blue" matTooltipPosition="above" mat-icon-button (click)="handleEditTask(task)">
+  <button *ngIf="isAdmin == true"  matTooltip="Editar tarea" matTooltipClass="custom-tooltip-blue" matTooltipPosition="above" mat-icon-button (click)="handleEditTask(task)">
     <mat-icon aria-label="icon-button to edit">edit</mat-icon>
   </button>
   <p class="task__date"><strong>Fecha de Creación:</strong> {{ task.fec_us_ing }}</p>
