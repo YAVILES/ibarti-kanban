@@ -1,6 +1,5 @@
 export const getLocalStorage = (fieldName: string) => {
-  const data = localStorage.getItem(fieldName);
-  return data ? JSON.parse(data) : null;
+  return localStorage.getItem(fieldName);
 };
 
 export const setLocalStorage = (fieldName: string, value: any) => {
