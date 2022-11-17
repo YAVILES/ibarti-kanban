@@ -74,7 +74,10 @@ export class CreateTaskComponent implements OnInit {
 
   onFormAdd(): void {
    if (this.createTask.valid && this.task && this.listId){
-      this.ibartiService.editTask(this.createTask.value).subscribe(data => this.tasksService.updateTask(this.createTask.value, this.listId ?? ''), error => console.log(error));
+      this.ibartiService.editTask(this.createTask.value)
+      .subscribe(
+        data => this.tasksService.updateTask(this.createTask.value, this.listId ?? ''), 
+        error => console.log(error));
     }
   }
 
@@ -97,6 +100,7 @@ export class CreateTaskComponent implements OnInit {
 
   save(){
     this.onFormAdd();
+    alert("Datos Gurdados Con Exitos");
   }
   
 }

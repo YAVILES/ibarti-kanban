@@ -68,7 +68,7 @@ export class ListComponent implements OnInit {
         status: task.cod_nov_status_kanban 
       })
       .subscribe(
-        (response: any) => (console.log('guardado con exito ', response)),
+        (response: any) => (alert("Datos Guardados Con exitos")),
         (error: string) => (console.log('Ups! we have an error: ', error))
       );
     }
