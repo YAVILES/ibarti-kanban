@@ -1,5 +1,5 @@
 export const getLocalStorage = (fieldName: string) => {
-  return localStorage.getItem(fieldName);
+  return localStorage.getItem(fieldName) ?? '';
 };
 
 export const setLocalStorage = (fieldName: string, value: any) => {

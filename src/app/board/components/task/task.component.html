@@ -16,6 +16,6 @@
     <p><strong>Trabajador:</strong> {{ task.trabajador }} ({{task.cod_ficha}})</p>
     <p><strong>Observación:</strong> {{ task.observacion }}</p>
     <p *ngIf="task?.respuesta"><strong>Respuesta:</strong> {{ task.respuesta }}</p>
-    <p><strong>Usuario:</strong> {{ task.usuario != "" && task.usuario != null ? task.usuario : "Sin Asignar" }}</p>
+    <p *ngIf="isAdmin == true"><strong>Usuario:</strong> {{ task.usuario != "" && task.usuario != null ? task.usuario : "Sin Asignar" }}</p>
   </div>
 </div>
