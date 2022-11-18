@@ -9,7 +9,7 @@ import { take } from 'rxjs/operators';
 import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 import { IbartiService } from 'src/app/core/services/ibarti.service';
 import { TaskService } from 'src/app/core/services/task.service';
-
+import {  ToastrService } from 'ngx-toastr';
 
 type DropdownObject = {
   codigo: string;
@@ -40,9 +40,10 @@ export class CreateTaskComponent implements OnInit {
   createTask!: FormGroup;
   selectedUser: string | undefined = "";
   id: string = "";
+  errort: boolean=false;
   status:string | undefined = "";
   constructor(
-    private fb: FormBuilder,
+    private fb: FormBuilder,public toastr:ToastrService,
     private _ngZone: NgZone,
     private tasksService: TaskService,
     private ibartiService: IbartiService
@@ -76,11 +77,15 @@ export class CreateTaskComponent implements OnInit {
    if (this.createTask.valid && this.task && this.listId){
       this.ibartiService.editTask(this.createTask.value)
       .subscribe(
-        data => this.tasksService.updateTask(this.createTask.value, this.listId ?? ''), 
-        error => console.log(error));
+        data => this.tasksService.updateTask(this.createTask.value, this.listId ?? ''),
+        error => this.errort=true);
     }
+   if (this.errort===false){
+    this.toastr.info("Datos Guardados con Exitos!.");
+   } else {
+    this.toastr.error("Error , Cargando Datos del Task");
+  } 
   }
-
   setValuesOnForm(form: TaskSchema): void {
     this.createTask.setValue({
       cod_usuario: form.cod_usuario
@@ -100,7 +105,7 @@ export class CreateTaskComponent implements OnInit {
 
   save(){
     this.onFormAdd();
-    alert("Datos Gurdados Con Exitos");
+   
   }
   
 }
