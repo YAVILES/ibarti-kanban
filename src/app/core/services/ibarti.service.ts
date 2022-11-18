@@ -18,7 +18,7 @@ interface TaskEdit {
 })
 export class IbartiService  {
   protected URL_API: string = env.API;
-  protected URL = `${this.URL_API}/kanban/`;
+  protected URL = `${this.URL_API}/kanban`;
   constructor(private http: HttpClient) { }
 
   /* Get Status Kanban Ibarti */
@@ -42,7 +42,7 @@ export class IbartiService  {
     data.append('status', task.status);
 
     return this.http
-      .post(`${this.URL}edit_task/?usuario=1234`, data)
+      .post(`${this.URL}/edit_task/?usuario=1234`, data)
       .pipe(map(data => data), catchError(this.handleError));
   }
   
