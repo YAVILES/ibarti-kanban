@@ -5,6 +5,7 @@ import { ListSchema, TaskSchema } from './../../../core';
 import { IbartiService } from 'src/app/core/services/ibarti.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { TaskService } from 'src/app/core/services/task.service';
+import {  ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -19,7 +20,7 @@ export class ListComponent implements OnInit {
   createTask!: FormGroup;
   users: TaskSchema[] = [ ];
   
-  constructor(  private fb: FormBuilder,
+  constructor(  private fb: FormBuilder,public toastr:ToastrService,
     private _ngZone: NgZone, public tasksService: TaskService,public ibartiService:IbartiService) {}
 
   ngOnInit(): void { 
@@ -68,8 +69,8 @@ export class ListComponent implements OnInit {
         status: task.cod_nov_status_kanban 
       })
       .subscribe(
-        (response: any) => (console.log('guardado con exito ', response)),
-        (error: string) => (console.log('Ups! we have an error: ', error))
+        (response: any) => (this.toastr.info("Datos Guardados con Exitos!.")),
+        (error: string) => (this.toastr.error("Error al Cargar los datos."))
       );
     }
   }
