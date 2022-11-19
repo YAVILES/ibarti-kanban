@@ -7,12 +7,21 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { BoardModule } from './board/board.module';
 import { ToastrModule } from 'ngx-toastr';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-     BrowserModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({

@@ -34,7 +34,16 @@
       </select>
       <mat-error> Usuario  es <strong>requerido</strong> </mat-error>
     </mat-form-field>
+       
     <br>
+    <mat-form-field appearance="fill" color="accent" class="form__fields__item">
+      <h3><mat-label>Vencimiento</mat-label></h3>
+      <input name="fec_vencimiento"
+      formControlName="fec_vencimiento" matInput [matDatepicker]="picker">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
     <button
       class="form__fields__button"
       mat-raised-button

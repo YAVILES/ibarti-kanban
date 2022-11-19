@@ -10,6 +10,7 @@ interface TaskEdit {
   usuario: string, // Código de usuario en sesión
   cod_usuario: string, // Codigo de usuario asignado a la tarea (novedad)
   codigo: string, // Codigo de la tarea (novedad)
+  fec_vencimiento:  string,
   status: string // Estatus kanban de la tarea (novedad.cod_nov_status_kanban)
 }
 
@@ -39,6 +40,7 @@ export class IbartiService  {
     data.append('usuario', task.usuario);
     data.append('cod_usuario', task.cod_usuario);
     data.append('codigo', task.codigo);
+    data.append('fec_vencimiento', task.fec_vencimiento);
     data.append('status', task.status);
 
     return this.http

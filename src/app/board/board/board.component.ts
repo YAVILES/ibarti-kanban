@@ -7,6 +7,7 @@ const initialValue = {
   codigo: '',
   novedad: '',
   fec_us_ing: '',
+  fec_vencimiento: '',
   cod_usuario: '',
   cod_nov_status_kanban :'',
 };
@@ -64,6 +65,7 @@ export class BoardComponent implements OnInit {
     if (!!event) {
       this.task = {
         fec_us_ing: event.fec_us_ing,
+        fec_vencimiento:event.fec_vencimiento,
         codigo: event.codigo,
         novedad: event.novedad,
         cod_usuario: event.cod_usuario,

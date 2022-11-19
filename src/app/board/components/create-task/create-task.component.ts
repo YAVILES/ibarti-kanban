@@ -69,6 +69,7 @@ export class CreateTaskComponent implements OnInit {
       cod_usuario: [this.task?.cod_usuario ? this.task.cod_usuario : "", Validators.required],
       codigo : [this.task?.codigo],
       status: [this.task?.cod_nov_status_kanban ? this.task.cod_nov_status_kanban : ""],
+      fec_vecimiento: [this.task?.fec_vencimiento, Validators.required],
       novedad: [this.task?.novedad ? this.task.novedad: ""],
     });
   }
