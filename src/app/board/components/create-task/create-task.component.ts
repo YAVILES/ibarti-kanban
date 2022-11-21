@@ -9,8 +9,10 @@ import { take } from 'rxjs/operators';
 import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 import { IbartiService } from 'src/app/core/services/ibarti.service';
 import { TaskService } from 'src/app/core/services/task.service';
-import {  ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
+import { environment as env } from '../../../../environments/environment';
 import { DatePipe } from '@angular/common';
+
 type DropdownObject = {
   codigo: string;
   cedula?: string;
@@ -72,7 +74,7 @@ export class CreateTaskComponent implements OnInit {
 
   setForm(): void {
     this.createTask = this.fb.group({
-      usuario: "1234",
+      usuario: `${env.USER_DEFAULT}`,
       cod_usuario: [this.task?.cod_usuario ? this.task.cod_usuario : "", Validators.required],
       codigo : [this.task?.codigo],
       status: [this.task?.cod_nov_status_kanban ? this.task.cod_nov_status_kanban : ""],

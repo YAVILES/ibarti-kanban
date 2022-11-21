@@ -5,7 +5,9 @@ import { ListSchema, TaskSchema } from './../../../core';
 import { IbartiService } from 'src/app/core/services/ibarti.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { TaskService } from 'src/app/core/services/task.service';
-import {  ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
+import { environment as env } from '../../../../environments/environment';
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -64,7 +66,7 @@ export class ListComponent implements OnInit {
   actualizartask(task: TaskSchema): void {   
     if (this.list) {
        this.ibartiService.editTask({
-        usuario: "1234", 
+        usuario: `${env.USER_DEFAULT}`, 
         cod_usuario: task.cod_usuario, 
         codigo: task.codigo,
         fec_vencimiento:task.fec_vencimiento,

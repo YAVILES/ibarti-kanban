@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import {  HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment as env } from '../../../environments/environment';
 
@@ -25,13 +23,13 @@ export class IbartiService  {
   /* Get Status Kanban Ibarti */
   getStatus() {
     return this.http
-      .get<Array<{}>>(`${this.URL}/status/?usuario=1234`)
+      .get<Array<{}>>(`${this.URL}/status/?usuario=${env.USER_DEFAULT}`)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
   getUsuarios() {
     return this.http
-      .get<Array<{}>>(`${this.URL}/users/?usuario=1234`)
+      .get<Array<{}>>(`${this.URL}/users/?usuario=${env.USER_DEFAULT}`)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
@@ -44,13 +42,13 @@ export class IbartiService  {
     data.append('status', task.status);
 
     return this.http
-      .post(`${this.URL}/edit_task/?usuario=1234`, data)
+      .post(`${this.URL}/edit_task/?usuario=${env.USER_DEFAULT}`, data)
       .pipe(map(data => data), catchError(this.handleError));
   }
   
   getTasks() {
     return this.http
-      .get<Array<{}>>(`${this.URL}/news/?usuario=1234`)
+      .get<Array<{}>>(`${this.URL}/news/?usuario=${env.USER_DEFAULT}`)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
