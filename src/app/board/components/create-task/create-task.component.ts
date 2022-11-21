@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -12,6 +12,7 @@ import { TaskService } from 'src/app/core/services/task.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment as env } from '../../../../environments/environment';
 import { DatePipe } from '@angular/common';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 type DropdownObject = {
   codigo: string;
@@ -35,9 +36,7 @@ export class CreateTaskComponent implements OnInit {
   @Output() editTask: EventEmitter<TaskSchema> = new EventEmitter();
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
   @Input() connectedOverlay!: CdkConnectedOverlay;
-  @Input() task?: TaskSchema;
   @Input() users: Users[] = [];
-  @Input() listId?: string;
   fechavence :string="" ;
   formText: string = "Editar";
   createTask!: FormGroup;
@@ -47,24 +46,21 @@ export class CreateTaskComponent implements OnInit {
   status:string | undefined = "";
   
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: {task: TaskSchema, listId: string},
     private fb: FormBuilder,public toastr:ToastrService,
     private _ngZone: NgZone,private miDatePipe: DatePipe,
     private tasksService: TaskService,
     private ibartiService: IbartiService
-    
-  ) {
-    
-
-   }
+  ) { }
 
   ngOnInit(): void {
     this.setForm();
     this.selectedUser = '';
-    if (this.task && this.task.codigo &&  this.task.codigo.length > 0) {
+    if (this.data.task && this.data.task.codigo &&  this.data.task.codigo.length > 0) {
       // this.setValuesOnForm(this.task);
       this.formText = 'Editar';
-      this.selectedUser = this.task.cod_usuario;
-      this.status = this.task.nov_status_kanban;
+      this.selectedUser = this.data.task.cod_usuario;
+      this.status = this.data.task.nov_status_kanban;
            
     } else {
       this.formText = 'Crear';
@@ -75,29 +71,31 @@ export class CreateTaskComponent implements OnInit {
   setForm(): void {
     this.createTask = this.fb.group({
       usuario: `${env.USER_DEFAULT}`,
-      cod_usuario: [this.task?.cod_usuario ? this.task.cod_usuario : "", Validators.required],
-      codigo : [this.task?.codigo],
-      status: [this.task?.cod_nov_status_kanban ? this.task.cod_nov_status_kanban : ""],
-      novedad: [this.task?.novedad ? this.task.novedad: ""],
-      fec_vencimiento:[this.task?.fec_vencimiento ? this.task.fec_vencimiento: "null"]
+      cod_usuario: [this.data.task?.cod_usuario ? this.data.task.cod_usuario : ""],
+      codigo : [this.data.task?.codigo],
+      status: [this.data.task?.cod_nov_status_kanban ? this.data.task.cod_nov_status_kanban : ""],
+      novedad: [this.data.task?.novedad ? this.data.task.novedad: ""],
+      fec_vencimiento:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"]
     });
     
   }
 
   onFormAdd(): void {
-   
-   if (this.createTask.valid && this.task && this.listId){
+    console.log(this.createTask.value && this.data.task, this.data.listId)
+   if (this.createTask.valid && this.data.task && this.data.listId){
       this.ibartiService.editTask(this.createTask.value)
       .subscribe(
-        data => this.tasksService.updateTask(this.createTask.value, this.listId ?? ''),
-        error => this.errort=true);
+        data => {
+          this.toastr.info("Datos Guardados con Exitos!.");
+          this.tasksService.updateTask(this.createTask.value, this.data.listId ?? '')
+        },
+        error => {
+          this.toastr.error("Error , Cargando Datos del Task");
+          this.errort=true;
+        });
     }
-   if (this.errort===false){
-    this.toastr.info("Datos Guardados con Exitos!.");
-   } else {
-    this.toastr.error("Error , Cargando Datos del Task");
-  } 
   }
+  
   setValuesOnForm(form: TaskSchema): void {
     this.createTask.setValue({
       cod_usuario: form.cod_usuario
@@ -117,8 +115,8 @@ export class CreateTaskComponent implements OnInit {
 
   save(){
     this.onFormAdd();
-   
   }
+
   formatearFecha(fecha: string) {
     const fechaArray: any[] = fecha.split(/[\/\s\:]/g);
 

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IbartiService, ListSchema, TaskSchema, Users } from './../../core';
 import { TaskService } from 'src/app/core/services/task.service';
-import { CdkConnectedOverlay, ConnectedPosition } from '@angular/cdk/overlay';
+import { CreateTaskComponent } from '../components/create-task/create-task.component';
+import { MatDialog } from '@angular/material/dialog';
 
 const initialValue = {
   codigo: '',
@@ -22,15 +23,9 @@ export class BoardComponent implements OnInit {
   users: Users[] = [];
   task: TaskSchema;
   isOverlayDisplayed = false;
-  readonly overlayOptions: Partial<CdkConnectedOverlay> = {
-    hasBackdrop: true,
-    positions: [
-      { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'top' },
-    ],
-  };
   listId!: string;
 
-  constructor(private ibartiService: IbartiService, private taskService: TaskService) {
+  constructor(private ibartiService: IbartiService, private taskService: TaskService, public dialog: MatDialog) {
     this.task = initialValue;
     this.lists = [];
   }
@@ -60,8 +55,6 @@ export class BoardComponent implements OnInit {
   }
 
   displayOverlay(event?: TaskSchema): void {
-    // console.log(event);
-    this.isOverlayDisplayed = true;
     if (!!event) {
       this.task = {
         fec_us_ing: event.fec_us_ing,
@@ -74,7 +67,12 @@ export class BoardComponent implements OnInit {
       if(event.listId){
         this.listId = event.listId;
       }
-      
+      const dialogRef = this.dialog.open(CreateTaskComponent, {
+        data: {task: this.task, listId: this.listId},
+      });
+      dialogRef.afterClosed().subscribe((result: any) => {
+        console.log(`Dialog result: ${result}`);
+      });
     } else {
       this.task = initialValue;
     }

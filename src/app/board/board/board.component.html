@@ -1,19 +1,5 @@
 <main class="board" cdkDropListGroup>
-  <button [hidden]="true" cdkOverlayOrigin (click)="displayOverlay()" #trigger="cdkOverlayOrigin">
-  </button>
   <section class="board__list">
     <app-list *ngFor="let list of lists" [list]="list" (editTask)="displayOverlay($event)"></app-list>
   </section>
-  <ng-template
-    #connectedOverlay="cdkConnectedOverlay"
-    cdkConnectedOverlay
-    [cdkConnectedOverlayOrigin]="trigger"
-    [cdkConnectedOverlayOpen]="isOverlayDisplayed"
-    [cdkConnectedOverlayHasBackdrop]="overlayOptions.hasBackdrop"
-    [cdkConnectedOverlayPositions]="overlayOptions.positions ? overlayOptions.positions : []"
-    (backdropClick)="hideOverlay()"
-    (detach)="hideOverlay()"
-  >
-    <app-create-task [connectedOverlay]="connectedOverlay" [task]="task" [listId]="listId" [users]="users"></app-create-task>
-  </ng-template>
 </main>

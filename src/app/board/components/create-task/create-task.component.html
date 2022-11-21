@@ -1,4 +1,4 @@
-<form
+<form fxLayout="column" fxLayoutGap="5px"
   class="form"
   [formGroup]="createTask"
   (ngSubmit)="onFormAdd()"
@@ -9,15 +9,14 @@
     <button
       class="form__header__close-button"
       mat-raised-button
-      (click)="close()"
+      [mat-dialog-close]="true"
     >
       <mat-icon aria-hidden="false" aria-label="close icon">close</mat-icon>
     </button>
    
   </header>
-  <section class="form__fields">
     <div>
-      <p><strong>Novedad:</strong> {{ task?.novedad }}</p>
+      <p><strong>Novedad:</strong> {{ data.task.novedad }}</p>
     </div>
     <mat-form-field appearance="fill" color="accent" class="form__fields__item">
       <mat-label>Seleccione un usuario</mat-label>
@@ -32,25 +31,21 @@
          {{ user.nombre }} {{ user.apellido }} ( {{ user.cedula }})
         </option>
       </select>
-      <mat-error> Usuario  es <strong>requerido</strong> </mat-error>
     </mat-form-field>
-       
     <br>
-    <mat-form-field appearance="fill" color="accent" class="form__fields__item">
+    <mat-form-field appearance="fill" color="accent">
       <h3><mat-label>Vencimiento</mat-label></h3>
-      <input name="fec_vencimiento"
-      formControlName="fec_vencimiento" matInput [matDatepicker]="picker">
-      <mat-hint>MM/DD/YYYY</mat-hint>
+      <input name="fec_vencimiento" formControlName="fec_vencimiento" matInput [matDatepicker]="picker">
+      <mat-hint>YYYY/MM/DD</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-    
-  </section>
-  <button
+    <br>
+    <button
       mat-raised-button
       color="accent"
       (click)="save()"
     >
     Guardar
-    </button>
+  </button>
 </form>
