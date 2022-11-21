@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment as env } from '../../../environments/environment';
-
+import { DatePipe } from '@angular/common';
 interface TaskEdit {
   usuario: string, // Código de usuario en sesión
   cod_usuario: string, // Codigo de usuario asignado a la tarea (novedad)
@@ -18,7 +18,7 @@ interface TaskEdit {
 export class IbartiService  {
   protected URL_API: string = env.API;
   protected URL = `${this.URL_API}/kanban`;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private miDatePipe: DatePipe,) { }
 
   /* Get Status Kanban Ibarti */
   getStatus() {
@@ -38,7 +38,7 @@ export class IbartiService  {
     data.append('usuario', task.usuario);
     data.append('cod_usuario', task.cod_usuario);
     data.append('codigo', task.codigo);
-    data.append('fec_vencimiento', task.fec_vencimiento);
+    data.append('fec_vencimiento', this.formatearFecha(task.fec_vencimiento));
     data.append('status', task.status);
 
     return this.http
@@ -56,5 +56,15 @@ export class IbartiService  {
   private handleError(res: HttpErrorResponse){
     return throwError(() => new Error(res.error || 'Server error'));
   }
- 
+
+  formatearFecha(fecha: string) {
+    const fechaArray = fecha.toString();
+
+    // Pasamos la fecha Date
+    const date = new Date(fechaArray);
+
+    const fechaFormateada = this.miDatePipe.transform(date, 'yyyy-MM-dd hh:mm:ss');
+
+    return `${fechaFormateada}`;
+  }
 }

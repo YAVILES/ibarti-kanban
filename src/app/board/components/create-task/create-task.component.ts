@@ -61,11 +61,11 @@ export class CreateTaskComponent implements OnInit {
       this.formText = 'Editar';
       this.selectedUser = this.data.task.cod_usuario;
       this.status = this.data.task.nov_status_kanban;
-           
+       
     } else {
       this.formText = 'Crear';
     } 
-    console.log("Casa Grande"+ this.fechavence);
+    
   }
 
   setForm(): void {
@@ -77,7 +77,7 @@ export class CreateTaskComponent implements OnInit {
       novedad: [this.data.task?.novedad ? this.data.task.novedad: ""],
       fec_vencimiento:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"]
     });
-    
+    this.getDatausuarios();
   }
 
   onFormAdd(): void {
@@ -116,15 +116,19 @@ export class CreateTaskComponent implements OnInit {
   save(){
     this.onFormAdd();
   }
-
+  getDatausuarios(): void {
+    this.ibartiService.getUsuarios()
+      .subscribe(
+        (response: any) => this.users = response,
+        (error: string) => (console.log('Ups! we have an error: ', error))
+    );
+ }
   formatearFecha(fecha: string) {
-    const fechaArray: any[] = fecha.split(/[\/\s\:]/g);
+    const fechaArray = new Date(fecha);
 
     // Pasamos fecha a milisegundos
-    const milliseconds = Date.UTC(fechaArray[2], fechaArray[1] - 1,
-      fechaArray[0], fechaArray[3], fechaArray[4], fechaArray[5]);
-
-    const fechaFormateada = this.miDatePipe.transform(milliseconds, 'yyyy-MM-dd HH:mm:ss-SS');
+    
+    const fechaFormateada = this.miDatePipe.transform(fechaArray, 'yyyy-MM-dd HH:mm:ss-SS');
 
     return `${fechaFormateada} ${fecha.split(/[\s]/g)[1]}-00`;
   }
