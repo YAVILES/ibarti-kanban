@@ -1,7 +1,6 @@
 export interface TaskSchema {
   codigo: string;
   fec_us_ing: Date | string;
-  fec_vencimiento:string;
   novedad?: string;
   cod_ficha?: string;
   trabajador?: string;
@@ -21,5 +20,7 @@ export interface TaskSchema {
   nov_status_kanban?: string;
   cod_usuario: string;
   usuario?: string;
+  fec_vencimiento:string;
   listId?: string;
+  vencido?:string;
 }

@@ -19,7 +19,7 @@ export class TaskComponent implements OnInit {
   ngOnInit(): void {}
 
   handleEditTask(task: TaskSchema) {
-    console.log(`POlicia Ucraniano${task.cod_nov_status_kanban}`);
+    
     this.editTask.emit(task);
   }
 }

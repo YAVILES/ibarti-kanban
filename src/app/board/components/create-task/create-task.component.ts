@@ -10,7 +10,7 @@ import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 import { IbartiService } from 'src/app/core/services/ibarti.service';
 import { TaskService } from 'src/app/core/services/task.service';
 import {  ToastrService } from 'ngx-toastr';
-
+import { DatePipe } from '@angular/common';
 type DropdownObject = {
   codigo: string;
   cedula?: string;
@@ -27,6 +27,7 @@ type DropdownObject = {
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
   styleUrls: ['./create-task.component.scss'],
+  providers: [DatePipe]
 })
 export class CreateTaskComponent implements OnInit {
   @Output() editTask: EventEmitter<TaskSchema> = new EventEmitter();
@@ -35,20 +36,24 @@ export class CreateTaskComponent implements OnInit {
   @Input() task?: TaskSchema;
   @Input() users: Users[] = [];
   @Input() listId?: string;
-
+  fechavence :string="" ;
   formText: string = "Editar";
   createTask!: FormGroup;
   selectedUser: string | undefined = "";
   id: string = "";
   errort: boolean=false;
   status:string | undefined = "";
+  
   constructor(
     private fb: FormBuilder,public toastr:ToastrService,
-    private _ngZone: NgZone,
+    private _ngZone: NgZone,private miDatePipe: DatePipe,
     private tasksService: TaskService,
     private ibartiService: IbartiService
     
-  ) { }
+  ) {
+    
+
+   }
 
   ngOnInit(): void {
     this.setForm();
@@ -58,9 +63,11 @@ export class CreateTaskComponent implements OnInit {
       this.formText = 'Editar';
       this.selectedUser = this.task.cod_usuario;
       this.status = this.task.nov_status_kanban;
+           
     } else {
       this.formText = 'Crear';
     } 
+    console.log("Casa Grande"+ this.fechavence);
   }
 
   setForm(): void {
@@ -69,12 +76,14 @@ export class CreateTaskComponent implements OnInit {
       cod_usuario: [this.task?.cod_usuario ? this.task.cod_usuario : "", Validators.required],
       codigo : [this.task?.codigo],
       status: [this.task?.cod_nov_status_kanban ? this.task.cod_nov_status_kanban : ""],
-      fec_vecimiento: [this.task?.fec_vencimiento, Validators.required],
       novedad: [this.task?.novedad ? this.task.novedad: ""],
+      fec_vencimiento:[this.task?.fec_vencimiento ? this.task.fec_vencimiento: "null"]
     });
+    
   }
 
   onFormAdd(): void {
+   
    if (this.createTask.valid && this.task && this.listId){
       this.ibartiService.editTask(this.createTask.value)
       .subscribe(
@@ -90,7 +99,7 @@ export class CreateTaskComponent implements OnInit {
   setValuesOnForm(form: TaskSchema): void {
     this.createTask.setValue({
       cod_usuario: form.cod_usuario
-    });
+     });
   }
 
   triggerResize() {
@@ -108,5 +117,15 @@ export class CreateTaskComponent implements OnInit {
     this.onFormAdd();
    
   }
-  
+  formatearFecha(fecha: string) {
+    const fechaArray: any[] = fecha.split(/[\/\s\:]/g);
+
+    // Pasamos fecha a milisegundos
+    const milliseconds = Date.UTC(fechaArray[2], fechaArray[1] - 1,
+      fechaArray[0], fechaArray[3], fechaArray[4], fechaArray[5]);
+
+    const fechaFormateada = this.miDatePipe.transform(milliseconds, 'yyyy-MM-dd HH:mm:ss-SS');
+
+    return `${fechaFormateada} ${fecha.split(/[\s]/g)[1]}-00`;
+  }
 }

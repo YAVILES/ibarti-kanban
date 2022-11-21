@@ -46,11 +46,11 @@ export class ListComponent implements OnInit {
       usuario:this.task?.usuario,
       cod_usuario: [this.task?.cod_usuario ? this.task.cod_usuario : "", Validators.required],
       codigo : this.task?.codigo,
-      fec_vencimiento: [this.task?.fec_vencimiento ? this.task.fec_vencimiento : "", Validators.required],
+      fec_vencimiento: [this.task?.fec_vencimiento ? this.task.fec_vencimiento : "01/10/2022", Validators.required],
       status: [this.task?.cod_nov_status_kanban ? this.task.cod_nov_status_kanban : ""],
       novedad: [this.task?.novedad ? this.task.novedad: ""],
     });
-    console.log("POlicia Vivo"+ this.createTask.controls["usuario"].value);
+   
   }
 
   handleEdit(task: TaskSchema){
