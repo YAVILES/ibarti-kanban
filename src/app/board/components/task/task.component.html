@@ -17,6 +17,6 @@
     <p><strong>Observación:</strong> {{ task.observacion }}</p>
     <p *ngIf="task?.respuesta"><strong>Respuesta:</strong> {{ task.respuesta }}</p>
     <p><strong>Usuario:</strong> {{ task.usuario != "" && task.usuario != null ? task.usuario : "Sin Asignar" }}</p>
-    <p class="task__date"><strong>Fecha de Vencimiento:</strong> {{ task.fec_vencimiento }}</p>
+    <p class="task__date"><strong>Fecha de Vencimiento:</strong> {{ task.fec_vencimiento | date:'yyyy-MM-dd'}}</p>
   </div>
 </div>

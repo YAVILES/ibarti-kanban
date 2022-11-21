@@ -68,7 +68,7 @@ export class BoardComponent implements OnInit {
         this.listId = event.listId;
       }
       const dialogRef = this.dialog.open(CreateTaskComponent, {
-        data: {task: this.task, listId: this.listId},
+        data: {task: this.task, listId: this.listId, users: this.users},
       });
       dialogRef.afterClosed().subscribe((result: any) => {
         console.log(`Dialog result: ${result}`);

@@ -27,7 +27,7 @@
         formControlName="cod_usuario"
       >
         <option value="" selected></option>
-        <option *ngFor="let user of users" [value]="user.codigo">
+        <option *ngFor="let user of data.users" [value]="user.codigo">
          {{ user.nombre }} {{ user.apellido }} ( {{ user.cedula }})
         </option>
       </select>

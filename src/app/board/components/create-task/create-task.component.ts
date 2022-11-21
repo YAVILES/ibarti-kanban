@@ -46,7 +46,7 @@ export class CreateTaskComponent implements OnInit {
   status:string | undefined = "";
   
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {task: TaskSchema, listId: string},
+    @Inject(MAT_DIALOG_DATA) public data: {task: TaskSchema, listId: string, users: Users[]},
     private fb: FormBuilder,public toastr:ToastrService,
     private _ngZone: NgZone,private miDatePipe: DatePipe,
     private tasksService: TaskService,
@@ -77,7 +77,7 @@ export class CreateTaskComponent implements OnInit {
       novedad: [this.data.task?.novedad ? this.data.task.novedad: ""],
       fec_vencimiento:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"]
     });
-    this.getDatausuarios();
+    // this.getDatausuarios();
   }
 
   onFormAdd(): void {
