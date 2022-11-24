@@ -45,7 +45,7 @@ export class IbartiService  {
     data.append('status', task.status);
 
     return this.http
-      .post(`${this.URL}edit_task/?usuario=${getLocalStorage('userIbartiKanban')}`, data)
+      .post(`${this.URL}/edit_task/?usuario=${getLocalStorage('userIbartiKanban')}`, data)
       .pipe(map(data => data), catchError(this.handleError));
   }
   

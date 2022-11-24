@@ -1,5 +1,5 @@
 <main class="board" cdkDropListGroup>
   <section class="board__list">
-    <app-list *ngFor="let list of lists" [list]="list" (editTask)="displayOverlay($event)"></app-list>
+    <app-list *ngFor="let list of lists" [list]="list" [lists]="lists" (editTask)="displayOverlay($event)"></app-list>
   </section>
 </main>

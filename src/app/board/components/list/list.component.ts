@@ -16,6 +16,8 @@ import { ToastrService } from 'ngx-toastr';
 
 export class ListComponent implements OnInit {
   @Input()
+  lists!: ListSchema[];
+  @Input()
   list!: ListSchema;
   @Input() task?: TaskSchema;
   @Output() editTask: EventEmitter<TaskSchema> = new EventEmitter();
@@ -31,6 +33,12 @@ export class ListComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<TaskSchema[]>) {
+    const indexListPrevious = this.lists.findIndex(l => l.codigo == event.previousContainer.id);
+    const indexListCurrent =this.lists.findIndex(l => l.codigo == event.container.id)
+    if(getLocalStorage('admin_kanban') != 'T' && indexListCurrent < indexListPrevious){
+      this.toastr.error('Necesitas ser administrador para mover una tarjeta a un estado anterior', 'Error', {timeOut: 9000});
+      return;
+    }
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {

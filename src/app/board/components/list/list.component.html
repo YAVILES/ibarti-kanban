@@ -1,6 +1,6 @@
 <div
   class="list"
-  id="list_{{ list.codigo }}"
+  id="{{ list.codigo }}"
   cdkDropList
   [cdkDropListData]="list.tasks"
   (cdkDropListDropped)="drop($event)"
