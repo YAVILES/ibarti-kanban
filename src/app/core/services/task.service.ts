@@ -69,4 +69,13 @@ export class TaskService {
     }
     this.loadInitialData();
   }
+  removeTask(dataId: string, list: ListSchema): void {
+    const elementsIndex = this.list.findIndex(
+      (element) => element.codigo== list.codigo
+    );
+    const tasks = this.list[elementsIndex].tasks.filter(
+      (task) => task.codigo !== dataId
+    );
+    this.list[elementsIndex].tasks = tasks;
+  }
 }

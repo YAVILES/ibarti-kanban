@@ -4,6 +4,7 @@ import { throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment as env } from '../../../environments/environment';
 import { DatePipe } from '@angular/common';
+import { TaskSchema } from '../models';
 interface TaskEdit {
   usuario: string, // Código de usuario en sesión
   cod_usuario: string, // Codigo de usuario asignado a la tarea (novedad)
@@ -46,12 +47,17 @@ export class IbartiService  {
       .pipe(map(data => data), catchError(this.handleError));
   }
   
+  getTaskshistorial(task:TaskSchema) {
+    console.log("POliiiiiiiiii"+task.codigo);
+    return this.http
+      .get<Array<{}>>(`${this.URL}/historial/?usuario=${env.USER_DEFAULT}&codigo=${task.codigo}`)
+      .pipe(map(data => data), catchError(this.handleError));
+  }
   getTasks() {
     return this.http
       .get<Array<{}>>(`${this.URL}/news/?usuario=${env.USER_DEFAULT}`)
       .pipe(map(data => data), catchError(this.handleError));
   }
-
   /* Handle request error */
   private handleError(res: HttpErrorResponse){
     return throwError(() => new Error(res.error || 'Server error'));

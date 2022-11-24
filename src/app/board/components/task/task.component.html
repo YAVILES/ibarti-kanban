@@ -10,6 +10,9 @@
   <button  matTooltip="Editar tarea" matTooltipClass="custom-tooltip-blue" matTooltipPosition="above" mat-icon-button (click)="handleEditTask(task)">
     <mat-icon aria-label="icon-button to edit">edit</mat-icon>
   </button>
+  <button  matTooltip="Editar tarea" matTooltipClass="custom-tooltip-blue" matTooltipPosition="above" mat-icon-button (click)="removeTask(task)">
+    <mat-icon aria-label="icon-button to edit">book</mat-icon>
+  </button>
   <p class="task__date"><strong>Fecha de Creación:</strong> {{ task.fec_us_ing }}</p>
   <div class="task__description">
     <p><strong>Cliente:</strong> {{ task.cliente }} / {{ task.ubicacion }}</p>

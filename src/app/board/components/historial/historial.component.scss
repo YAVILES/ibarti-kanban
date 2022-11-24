@@ -1,0 +1,31 @@
+.form {
+    border-radius: .20em;
+    box-shadow: none;
+  
+    &__header {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; 
+      &__title {
+        text-align: center;
+      }
+      &__close-button {
+        border: 0;
+        box-shadow: none;
+        position: relative;
+        top: -5px;
+      }
+    }
+  
+    @media (min-width: 960px) {
+      &__header {
+        flex-direction: row;
+        &__button {
+          min-width: 20%;
+        }
+        h1 {
+          text-align: left;
+        }
+      }
+    }
+  }
