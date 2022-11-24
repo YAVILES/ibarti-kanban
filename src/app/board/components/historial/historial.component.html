@@ -19,7 +19,7 @@
     <p><strong>Vencimiento:</strong> {{ data.task.fec_vencimiento }}</p>
     <mat-list>
       <mat-list-item style="height: 20px"  class="form__list" *ngFor="let item of data.historial">
-        * {{item.usuario}} -> {{ item.fec_vencimiento | date:'yyyy-MM-dd'}} {{ item.status_kanban }} ( {{ item.fec_us_ing }})
+        * {{item.usuario_mod}} -> {{item.usuario}} {{ item.fec_vencimiento | date:'yyyy-MM-dd'}} {{ item.status_kanban }} ( {{ item.fec_us_ing }})
           <mat-divider></mat-divider>
       </mat-list-item>  
     </mat-list> 
