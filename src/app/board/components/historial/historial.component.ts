@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Inject, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TaskSchema } from 'src/app/core/';
-import { Users } from 'src/app/core/models/users';
 import { Histori } from 'src/app/core/models/histori';
 
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -10,9 +9,9 @@ import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 import { IbartiService } from 'src/app/core/services/ibarti.service';
 import { TaskService } from 'src/app/core/services/task.service';
 import { ToastrService } from 'ngx-toastr';
-import { environment as env } from '../../../../environments/environment';
 import { DatePipe } from '@angular/common';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { getLocalStorage } from 'src/app/utils/localStorage';
 
 type DropdownObject = {
   codigo: string;
@@ -68,7 +67,7 @@ export class HistorialComponent implements OnInit {
 
   setForm(): void {
     this.createTask = this.fb.group({
-      usuario: `${env.USER_DEFAULT}`,
+      usuario: `${getLocalStorage('userIbartiKanban')}`,
       cod_usuario: [this.data.task?.cod_usuario ? this.data.task.cod_usuario : ""],
       codigo : [this.data.task?.codigo],
       status: [this.data.task?.cod_nov_status_kanban ? this.data.task.cod_nov_status_kanban : ""],
