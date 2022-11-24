@@ -13,33 +13,26 @@
     >
       <mat-icon aria-hidden="false" aria-label="close icon">close</mat-icon>
     </button>
+    <button
+    class="form__header__close-button"
+    mat-raised-button
+    (click)="close()"
+    pdf
+  >
+    <mat-icon aria-hidden="false" aria-label="close icon">house</mat-icon>
+  </button>
    
   </header>
     <div>
       <p><strong>Novedad:</strong> {{ data.task.novedad }}</p>
       <p><strong>Vencimiento:</strong> {{ data.task.fec_vencimiento }}</p>
     </div>
-    <mat-form-field appearance="fill" color="accent" class="form__fields__item">
-      <mat-label>Ver Historial</mat-label>
-      <select
-        matNativeControl
-        [(ngModel)]="selectedUser"
-        name="cod_usuario"
-        formControlName="cod_usuario"
-      >
-        <option value="" selected></option>
-        <option *ngFor="let user of data.users" [value]="user.cod_nov_proc">
-         {{ user.fec_vencimiento }} {{ user.status_kanban }} ( {{ user.fec_us_ing }})
-        </option>
-      </select>
-    </mat-form-field>
-    <br>
-    <br>
-    <button
-      mat-raised-button
-      color="accent"
-      (click)="close()"
-    >
-    Ver
-  </button>
+   
+   <mat-selection-list>
+        <mat-list-option style="height: 20px" *ngFor="let item of data.users">
+          {{ item.fec_vencimiento }} {{ item.status_kanban }} ( {{ item.fec_us_ing }})
+            <mat-divider></mat-divider>
+        </mat-list-option>  
+      </mat-selection-list> 
+    
 </form>
