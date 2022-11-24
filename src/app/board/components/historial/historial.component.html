@@ -1,0 +1,27 @@
+<form fxLayout="column" fxLayoutGap="100px"
+  class="form"
+  [formGroup]="createTask"
+  (ngSubmit)="close()"
+  novalidate
+>
+  <header class="form__header">
+    <h3 class="form__header__title">{{ formText }} Tarea </h3>
+    <button
+      class="form__header__close-button"
+      mat-raised-button
+      [mat-dialog-close]="true"
+    >
+      <mat-icon aria-hidden="false" aria-label="close icon">close</mat-icon>
+    </button>
+  </header>
+  <div>
+    <p><strong>Novedad:</strong> {{ data.task.novedad }}</p>
+    <p><strong>Vencimiento:</strong> {{ data.task.fec_vencimiento }}</p>
+    <mat-list>
+      <mat-list-item style="height: 20px"  class="form__list" *ngFor="let item of data.historial">
+        * {{item.usuario}} -> {{ item.fec_vencimiento | date:'yyyy-MM-dd'}} {{ item.status_kanban }} ( {{ item.fec_us_ing }})
+          <mat-divider></mat-divider>
+      </mat-list-item>  
+    </mat-list> 
+  </div>
+</form>

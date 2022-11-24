@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ListSchema, TaskSchema } from './../../../core';
+import { ListSchema, TaskSchema, Histori } from './../../../core';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskService } from 'src/app/core/services/task.service';
 import { getLocalStorage } from 'src/app/utils/localStorage';
+import { HistorialComponent } from '../historial/historial.component';
 
 @Component({
   selector: 'app-task',
@@ -15,6 +16,7 @@ export class TaskComponent implements OnInit {
   @Output() editTask: EventEmitter<TaskSchema> = new EventEmitter();
   @Input() list?: ListSchema;
   isAdmin: boolean = false;
+  @Input() users: Histori[] = [];
   constructor(public dialog: MatDialog, public tasksService: TaskService) {}
 
   ngOnInit(): void {
@@ -22,7 +24,16 @@ export class TaskComponent implements OnInit {
   }
 
   handleEditTask(task: TaskSchema) {
-    console.log(`POlicia Ucraniano${task.cod_nov_status_kanban}`);
+    
     this.editTask.emit(task);
+  }
+
+  handleHistorialTask(task:TaskSchema): void {
+    const dialogRef = this.dialog.open(HistorialComponent, {
+      data: {task: this.task, listId: this.list?.codigo, users: this.users, panelClass: "panelModal"},
+    });
+    dialogRef.afterClosed().subscribe((result: any) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }

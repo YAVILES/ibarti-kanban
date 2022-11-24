@@ -10,6 +10,9 @@
   <button *ngIf="isAdmin == true"  matTooltip="Editar tarea" matTooltipClass="custom-tooltip-blue" matTooltipPosition="above" mat-icon-button (click)="handleEditTask(task)">
     <mat-icon aria-label="icon-button to edit">edit</mat-icon>
   </button>
+  <button  matTooltip="Editar tarea" matTooltipClass="custom-tooltip-blue" matTooltipPosition="above" mat-icon-button (click)="handleHistorialTask(task)">
+    <mat-icon aria-label="icon-button to edit">book</mat-icon>
+  </button>
   <p class="task__date"><strong>Fecha de Creación:</strong> {{ task.fec_us_ing }}</p>
   <div class="task__description">
     <p><strong>Cliente:</strong> {{ task.cliente }} / {{ task.ubicacion }}</p>
@@ -17,5 +20,6 @@
     <p><strong>Observación:</strong> {{ task.observacion }}</p>
     <p *ngIf="task?.respuesta"><strong>Respuesta:</strong> {{ task.respuesta }}</p>
     <p *ngIf="isAdmin == true"><strong>Usuario:</strong> {{ task.usuario != "" && task.usuario != null ? task.usuario : "Sin Asignar" }}</p>
+    <p class="task__date"><strong>Fecha de Vencimiento:</strong> {{ task.fec_vencimiento | date:'yyyy-MM-dd'}}</p>
   </div>
 </div>

@@ -6,6 +6,8 @@ import { IbartiService } from 'src/app/core/services/ibarti.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { TaskService } from 'src/app/core/services/task.service';
 import { getLocalStorage } from 'src/app/utils/localStorage';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -20,7 +22,7 @@ export class ListComponent implements OnInit {
   createTask!: FormGroup;
   users: TaskSchema[] = [ ];
   
-  constructor(  private fb: FormBuilder,
+  constructor(  private fb: FormBuilder,public toastr:ToastrService,
     private _ngZone: NgZone, public tasksService: TaskService,public ibartiService:IbartiService) {}
 
   ngOnInit(): void { 
@@ -46,10 +48,11 @@ export class ListComponent implements OnInit {
       usuario:this.task?.usuario,
       cod_usuario: [this.task?.cod_usuario ? this.task.cod_usuario : "", Validators.required],
       codigo : this.task?.codigo,
+      fec_vencimiento: [this.task?.fec_vencimiento ? this.task.fec_vencimiento : "01/10/2022", Validators.required],
       status: [this.task?.cod_nov_status_kanban ? this.task.cod_nov_status_kanban : ""],
       novedad: [this.task?.novedad ? this.task.novedad: ""],
     });
-    console.log("POlicia Vivo"+ this.createTask.controls["usuario"].value);
+   
   }
 
   handleEdit(task: TaskSchema){
@@ -63,14 +66,15 @@ export class ListComponent implements OnInit {
   actualizartask(task: TaskSchema): void {   
     if (this.list) {
        this.ibartiService.editTask({
-        usuario: getLocalStorage('userIbartiKanban'), 
+        usuario: getLocalStorage('userIbartiKanban'),
         cod_usuario: task.cod_usuario, 
         codigo: task.codigo,
+        fec_vencimiento:task.fec_vencimiento,
         status: task.cod_nov_status_kanban 
       })
       .subscribe(
-        (response: any) => (console.log('guardado con exito ', response)),
-        (error: string) => (console.log('Ups! we have an error: ', error))
+        (response: any) => (this.toastr.info("Datos Guardados con Exitos!.")),
+        (error: string) => (this.toastr.error("Error al Cargar los datos."))
       );
     }
   }
