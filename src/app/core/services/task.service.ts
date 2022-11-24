@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IbartiService, TaskSchema, ListSchema} from '../';
@@ -16,30 +17,39 @@ export class TaskService {
   readonly users$ = this.boardUsers.asObservable();
   readonly getBoardUsers$ = this.users$.pipe(map((users) => users));
   public listauasuario: Users[]=[];
-  constructor(private ibartiService: IbartiService) {
+  constructor(private ibartiService: IbartiService, public toastr: ToastrService) {
     this.loadInitialData();
     this.loadInitialDataUsuario();
   }
 
   /* Load initial data to render in a component */
   loadInitialData(): any {
-    return this.ibartiService.getStatus().subscribe((status: any[]) => {
-      if (!!status) {
-        this.ibartiService.getTasks().subscribe((tasks: any[]) => {
-          if (!!tasks) {
-            for (let index = 0; index < status.length; index++) {
-              status[index].tasks = tasks.filter(t => t.cod_nov_status_kanban == status[index].codigo);
+    return this.ibartiService.getStatus().subscribe((status: any) => {
+      if(status.error){
+        this.toastr.error(`${status.error}`);
+      }else{
+        if (!!status) {
+          this.ibartiService.getTasks().subscribe((tasks: any[]) => {
+            if (!!tasks) {
+              for (let index = 0; index < status.length; index++) {
+                status[index].tasks = tasks.filter(t => t.cod_nov_status_kanban == status[index].codigo);
+              }
+              this.boardList.next(status);
             }
-            this.boardList.next(status);
-          }
-        });
+          });
+        }
       }
     });
   }
+
   loadInitialDataUsuario(): any {
-    return this.ibartiService.getUsuarios().subscribe((data: any[]) => {
-      if (!!data) {
-        this.listauasuario= data;
+    return this.ibartiService.getUsuarios().subscribe((data: any) => {
+      if(data.error){
+        this.toastr.error(`${data.error}`);
+      }else{
+        if (!!data) {
+          this.listauasuario= data;
+        }
       }
     });
    
