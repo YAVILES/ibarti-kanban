@@ -23,9 +23,10 @@ export class TaskComponent implements OnInit {
     
     this.editTask.emit(task);
   }
-  removeTask(task:TaskSchema): void {
+
+  handleHistorialTask(task:TaskSchema): void {
     const dialogRef = this.dialog.open(HistorialComponent, {
-      data: {task: this.task, listId: this.list?.codigo,users: this.users},
+      data: {task: this.task, listId: this.list?.codigo, users: this.users, panelClass: "panelModal"},
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(`Dialog result: ${result}`);

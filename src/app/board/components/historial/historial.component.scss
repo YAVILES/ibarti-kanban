@@ -1,7 +1,14 @@
 .form {
     border-radius: .20em;
     box-shadow: none;
-  
+    color: black;
+    background-color: white;
+    padding: 5px;
+
+    &__list {
+      color: black;
+    }
+
     &__header {
       display: flex;
       flex-direction: column;
@@ -28,4 +35,13 @@
         }
       }
     }
+  }
+
+  .panelModal {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  mat-label {
+    color: black !important;
   }

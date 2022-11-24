@@ -1,6 +1,9 @@
 .form {
   border-radius: .5em;
   box-shadow: none;
+  color: black;
+  background-color: white;
+  padding: 5px;
 
   &__header {
     display: flex;
@@ -28,4 +31,12 @@
       }
     }
   }
+}
+
+mat-datepicker-toggle {
+  color: black !important;
+}
+
+mat-label {
+  color: black !important;
 }

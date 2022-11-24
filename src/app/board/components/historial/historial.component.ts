@@ -44,7 +44,7 @@ export class HistorialComponent implements OnInit {
   errort: boolean=false;
   status:string | undefined = "";
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {task: TaskSchema, listId: string, users: Histori[]},
+    @Inject(MAT_DIALOG_DATA) public data: {task: TaskSchema, listId: string, historial: Histori[]},
     private fb: FormBuilder,public toastr:ToastrService,
     private _ngZone: NgZone,private miDatePipe: DatePipe,
     private tasksService: TaskService,
@@ -99,14 +99,14 @@ export class HistorialComponent implements OnInit {
   getDatausuarios(): void {
     this.ibartiService.getUsuarios()
       .subscribe(
-        (response: any) => this.data.users = response,
+        (response: any) => this.data.historial = response,
         (error: string) => (console.log('Ups! we have an error: ', error))
     );
  }
  getDatahistorial(): void {
   this.ibartiService.getTaskshistorial(this.data.task)
     .subscribe(
-      (response: any) => this.data.users = response,
+      (response: any) => this.data.historial = response,
       (error: string) => (console.log('Ups! we have an error: ', error))
   );
 }
