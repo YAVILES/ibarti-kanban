@@ -1,8 +1,13 @@
 <div 
   class="task"
   id="task_{{task.codigo}}"
-  >
-<!--  [ngClass]="{'task--urgent': task.priority === 'urgent', 'task--moderate': task.priority === 'moderate', 'task--low': task.priority === 'low'}"  -->
+  [ngClass]="{'task--vencida': task.vencido === '1', 'task--activa': task.vencido === '0'}">
+  <div class="task__icon">
+    <mat-icon aria-hidden="false" aria-label="urgent icon" *ngIf="task.cod_nov_status_kanban === '01'">alarm</mat-icon>
+    <mat-icon aria-hidden="false" aria-label="medium icon" *ngIf="task.cod_nov_status_kanban === '02'">autorenew</mat-icon>
+    <mat-icon aria-hidden="false" aria-label="medium icon" *ngIf="task.cod_nov_status_kanban === '03'">assignment_returned</mat-icon>
+    <mat-icon aria-hidden="false" aria-label="medium icon" *ngIf="task.cod_nov_status_kanban === '04'">delete</mat-icon>
+  </div>
   <div class="task__title">
     {{task.tipo}}
     <h3>{{ task.novedad }}</h3>
