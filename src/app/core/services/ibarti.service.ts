@@ -41,7 +41,7 @@ export class IbartiService  {
     data.append('usuario', task.usuario);
     data.append('cod_usuario', task.cod_usuario);
     data.append('codigo', task.codigo);
-    data.append('fec_vencimiento', this.formatearFecha(task.fec_vencimiento));
+    data.append('fec_vencimiento', task?.fec_vencimiento ? this.formatearFecha(task.fec_vencimiento) : 'null');
     data.append('status', task.status);
 
     return this.http
