@@ -31,7 +31,7 @@
     <p><strong>Usuario:</strong> {{ task.usuario != "" && task.usuario != null ? task.usuario : "Sin Asignar" }}</p>
     <p class="task__date"><strong>Fecha de Vencimiento:</strong> {{ task.fec_vencimiento | date:'yyyy-MM-dd'}}</p>
   </div>
-  <button mat-icon-button  matTooltipPosition="above"  (click)=" handleHistorialTask(task)">
+  <button mat-icon-button  matTooltipPosition="above"  (click)=" handleEditactivityTask(task)">
     <mat-icon>more_hort</mat-icon>
   </button>
 </div>

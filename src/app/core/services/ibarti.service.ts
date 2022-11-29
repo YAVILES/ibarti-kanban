@@ -53,6 +53,11 @@ export class IbartiService  {
       .pipe(map(data => data), catchError(this.handleError));
   }
   
+  getTasksEditActivity(task:TaskSchema) {
+    return this.http
+      .get<Array<{}>>(`${this.URL}/activity/?usuario=${env.USER_DEFAULT}&codigo=${task.codigo}`)
+      .pipe(map(data => data), catchError(this.handleError));
+  }
   getTaskshistorial(task:TaskSchema) {
     return this.http
       .get<Array<{}>>(`${this.URL}/historial/?usuario=${env.USER_DEFAULT}&codigo=${task.codigo}`)
