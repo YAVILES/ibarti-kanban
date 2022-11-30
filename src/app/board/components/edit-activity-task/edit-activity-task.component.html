@@ -21,7 +21,7 @@
     <p *ngIf="data?.historial?.length === 0"> Sin Actividades</p>
     
     <mat-selection-list formControlName="selectedTech">
-    <mat-list-option *ngFor="let item of data.historial" [value]="item">
+    <mat-list-option *ngFor="let item of data.historial" class="form__list" [value]="item">
       * {{item.actividad}} <br> {{ item.fec_us_ing | date:'yyyy-MM-dd'}} ( {{ item.usuario_mod }}) 
     </mat-list-option>
   </mat-selection-list>
