@@ -1,17 +1,16 @@
 import { Component, EventEmitter, Inject, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
-
-import { FormBuilder, FormGroup } from '@angular/forms';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaskSchema } from 'src/app/core/';
 import { Users } from 'src/app/core/models/users';
+import { Actividades } from 'src/app/core/models/activity';
+
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
 import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 import { IbartiService } from 'src/app/core/services/ibarti.service';
 import { TaskService } from 'src/app/core/services/task.service';
-import { getLocalStorage } from 'src/app/utils/localStorage';
-
 import { ToastrService } from 'ngx-toastr';
+import { environment as env } from '../../../../environments/environment';
 import { DatePipe } from '@angular/common';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -28,26 +27,25 @@ type DropdownObject = {
 };
 
 @Component({
-  selector: 'app-create-task',
-  templateUrl: './create-task.component.html',
-  styleUrls: ['./create-task.component.scss'],
-  providers: [DatePipe]
+  selector: 'app-edit-activity-task',
+  templateUrl: './edit-activity-task.component.html',
+  styleUrls: ['./edit-activity-task.component.scss']
 })
-export class CreateTaskComponent implements OnInit {
+export class EditActivityTaskComponent implements OnInit {
+
   @Output() editTask: EventEmitter<TaskSchema> = new EventEmitter();
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
   @Input() connectedOverlay!: CdkConnectedOverlay;
-  @Input() users: Users[] = [];
+  @Input() users: Actividades[] = [];
   fechavence :string="" ;
-  formText: string = "Editar";
+  formText: string = "Edit Actividades";
   createTask!: FormGroup;
   selectedUser: string | undefined = "";
   id: string = "";
   errort: boolean=false;
   status:string | undefined = "";
-  
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {task: TaskSchema, listId: string, users: Users[]},
+    @Inject(MAT_DIALOG_DATA) public data: {task: TaskSchema, listId: string, historial: Actividades[]},
     private fb: FormBuilder,public toastr:ToastrService,
     private _ngZone: NgZone,private miDatePipe: DatePipe,
     private tasksService: TaskService,
@@ -59,7 +57,7 @@ export class CreateTaskComponent implements OnInit {
     this.selectedUser = '';
     if (this.data.task && this.data.task.codigo &&  this.data.task.codigo.length > 0) {
       // this.setValuesOnForm(this.task);
-      this.formText = 'Editar';
+      this.formText = 'Actividades';
       this.selectedUser = this.data.task.cod_usuario;
       this.status = this.data.task.nov_status_kanban;
        
@@ -71,30 +69,14 @@ export class CreateTaskComponent implements OnInit {
 
   setForm(): void {
     this.createTask = this.fb.group({
-      usuario: getLocalStorage('userIbartiKanban'),
+      usuario: `${env.USER_DEFAULT}`,
       cod_usuario: [this.data.task?.cod_usuario ? this.data.task.cod_usuario : ""],
       codigo : [this.data.task?.codigo],
       status: [this.data.task?.cod_nov_status_kanban ? this.data.task.cod_nov_status_kanban : ""],
       novedad: [this.data.task?.novedad ? this.data.task.novedad: ""],
-      fec_vencimiento:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"]
+      fec_vencimiento:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento:this.data.task.fec_vencimiento]
     });
-    // this.getDatausuarios();
-  }
-
-  onFormAdd(): void {
-    console.log(this.createTask.value && this.data.task, this.data.listId);
-   if (this.createTask.valid && this.data.task && this.data.listId){
-      this.ibartiService.editTask(this.createTask.value)
-      .subscribe(
-        data => {
-          this.toastr.info("Datos Guardados con Exitos!.");
-          this.tasksService.updateTask(this.createTask.value, this.data.listId ?? '')
-        },
-        error => {
-          this.toastr.error("Error , Cargando Datos del Task");
-          this.errort=true;
-        });
-    }
+     this.getDataactividades();
   }
   
   setValuesOnForm(form: TaskSchema): void {
@@ -114,16 +96,21 @@ export class CreateTaskComponent implements OnInit {
     this.connectedOverlay.overlayRef.detach();
   }
 
-  save(){
-    this.onFormAdd();
-  }
+  
   getDatausuarios(): void {
     this.ibartiService.getUsuarios()
       .subscribe(
-        (response: any) => this.users = response,
+        (response: any) => this.data.historial = response,
         (error: string) => (console.log('Ups! we have an error: ', error))
     );
  }
+ getDataactividades(): void {
+  this.ibartiService.getTasksEditActivity(this.data.task)
+    .subscribe(
+      (response: any) => this.data.historial = response,
+      (error: string) => (console.log('Ups! we have an error: ', error))
+  );
+}
   formatearFecha(fecha: string) {
     const fechaArray = new Date(fecha);
 
@@ -133,4 +120,6 @@ export class CreateTaskComponent implements OnInit {
 
     return `${fechaFormateada} ${fecha.split(/[\s]/g)[1]}-00`;
   }
+
+
 }

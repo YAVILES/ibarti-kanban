@@ -1,8 +1,13 @@
 <div 
   class="task"
   id="task_{{task.codigo}}"
-  >
-<!--  [ngClass]="{'task--urgent': task.priority === 'urgent', 'task--moderate': task.priority === 'moderate', 'task--low': task.priority === 'low'}"  -->
+  [ngClass]="{'task--vencida': task.vencido === '1', 'task--activa': task.vencido === '0'}">
+  <div class="task__icon">
+    <mat-icon aria-hidden="false" aria-label="urgent icon" *ngIf="task.cod_nov_status_kanban === '01'">alarm</mat-icon>
+    <mat-icon aria-hidden="false" aria-label="medium icon" *ngIf="task.cod_nov_status_kanban === '02'">autorenew</mat-icon>
+    <mat-icon aria-hidden="false" aria-label="medium icon" *ngIf="task.cod_nov_status_kanban === '03'">assignment_returned</mat-icon>
+    <mat-icon aria-hidden="false" aria-label="medium icon" *ngIf="task.cod_nov_status_kanban === '04'">delete</mat-icon>
+  </div>
   <div class="task__title">
     {{task.tipo}}
     <h3>{{ task.novedad }}</h3>
@@ -13,6 +18,10 @@
   <button  matTooltip="Editar tarea" matTooltipClass="custom-tooltip-blue" matTooltipPosition="above" mat-icon-button (click)="handleHistorialTask(task)">
     <mat-icon aria-label="icon-button to edit">book</mat-icon>
   </button>
+  <button mat-icon-button aria-label="Example icon button with a vertical three dot icon"  mat-icon-button (click)=" handleExecersiTask(taskacti)">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  
   <p class="task__date"><strong>Fecha de Creación:</strong> {{ task.fec_us_ing }}</p>
   <div class="task__description">
     <p><strong>Cliente:</strong> {{ task.cliente }} / {{ task.ubicacion }}</p>
@@ -22,4 +31,7 @@
     <p *ngIf="isAdmin == true"><strong>Usuario:</strong> {{ task.usuario != "" && task.usuario != null ? task.usuario : "Sin Asignar" }}</p>
     <p class="task__date"><strong>Fecha de Vencimiento:</strong> {{ task.fec_vencimiento | date:'yyyy-MM-dd'}}</p>
   </div>
+  <button mat-icon-button  matTooltipPosition="above"  (click)=" handleEditactivityTask(task)">
+    <mat-icon>more_hort</mat-icon>
+  </button>
 </div>

@@ -1,17 +1,15 @@
 import { Component, EventEmitter, Inject, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
-
-import { FormBuilder, FormGroup } from '@angular/forms';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaskSchema } from 'src/app/core/';
+import { Actividades } from 'src/app/core/models/actividades';
 import { Users } from 'src/app/core/models/users';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
 import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 import { IbartiService } from 'src/app/core/services/ibarti.service';
 import { TaskService } from 'src/app/core/services/task.service';
-import { getLocalStorage } from 'src/app/utils/localStorage';
-
 import { ToastrService } from 'ngx-toastr';
+import { environment as env } from '../../../../environments/environment';
 import { DatePipe } from '@angular/common';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -27,27 +25,27 @@ type DropdownObject = {
   admin_kanban? :string;
 };
 
+
 @Component({
-  selector: 'app-create-task',
-  templateUrl: './create-task.component.html',
-  styleUrls: ['./create-task.component.scss'],
-  providers: [DatePipe]
+  selector: 'app-create-excercise-task',
+  templateUrl: './create-excercise-task.component.html',
+  styleUrls: ['./create-excercise-task.component.scss']
 })
-export class CreateTaskComponent implements OnInit {
-  @Output() editTask: EventEmitter<TaskSchema> = new EventEmitter();
+export class CreateExcerciseTaskComponent implements OnInit {
+ @Output() editActivity: EventEmitter<Actividades> = new EventEmitter();
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
   @Input() connectedOverlay!: CdkConnectedOverlay;
   @Input() users: Users[] = [];
   fechavence :string="" ;
   formText: string = "Editar";
-  createTask!: FormGroup;
+  createTaskA!: FormGroup;
   selectedUser: string | undefined = "";
   id: string = "";
   errort: boolean=false;
   status:string | undefined = "";
-  
+  actividad:string | undefined = ""; ;
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {task: TaskSchema, listId: string, users: Users[]},
+    @Inject(MAT_DIALOG_DATA) public data: {task:TaskSchema, taskacti: Actividades, listId: string, users: Users[]},
     private fb: FormBuilder,public toastr:ToastrService,
     private _ngZone: NgZone,private miDatePipe: DatePipe,
     private tasksService: TaskService,
@@ -57,38 +55,33 @@ export class CreateTaskComponent implements OnInit {
   ngOnInit(): void {
     this.setForm();
     this.selectedUser = '';
-    if (this.data.task && this.data.task.codigo &&  this.data.task.codigo.length > 0) {
+    if (this.data.taskacti) {
       // this.setValuesOnForm(this.task);
-      this.formText = 'Editar';
-      this.selectedUser = this.data.task.cod_usuario;
-      this.status = this.data.task.nov_status_kanban;
-       
+      this.formText = 'Actividad';
+      this.status = this.data.task.nov_status_kanban; 
+      
     } else {
       this.formText = 'Crear';
     } 
-    
   }
-
   setForm(): void {
-    this.createTask = this.fb.group({
-      usuario: getLocalStorage('userIbartiKanban'),
-      cod_usuario: [this.data.task?.cod_usuario ? this.data.task.cod_usuario : ""],
+    this.createTaskA= this.fb.group({
+      usuario: `${env.USER_DEFAULT}`,
+      activity: [this.data.taskacti?.activity ? this.data.taskacti.activity: ""],
       codigo : [this.data.task?.codigo],
-      status: [this.data.task?.cod_nov_status_kanban ? this.data.task.cod_nov_status_kanban : ""],
-      novedad: [this.data.task?.novedad ? this.data.task.novedad: ""],
-      fec_vencimiento:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"]
+           
     });
-    // this.getDatausuarios();
+   
   }
 
   onFormAdd(): void {
-    console.log(this.createTask.value && this.data.task, this.data.listId);
-   if (this.createTask.valid && this.data.task && this.data.listId){
-      this.ibartiService.editTask(this.createTask.value)
+    console.log(`ojo${this.data.task}`);
+   if (this.createTaskA.valid && this.data.task && this.data.listId){
+      this.ibartiService.CrearExcerciseTask(this.createTaskA.value)
       .subscribe(
-        data => {
+        (data): void => {
           this.toastr.info("Datos Guardados con Exitos!.");
-          this.tasksService.updateTask(this.createTask.value, this.data.listId ?? '')
+          this.tasksService.updateTask(this.createTaskA.value, this.data.listId ?? '')
         },
         error => {
           this.toastr.error("Error , Cargando Datos del Task");
@@ -97,9 +90,9 @@ export class CreateTaskComponent implements OnInit {
     }
   }
   
-  setValuesOnForm(form: TaskSchema): void {
-    this.createTask.setValue({
-      cod_usuario: form.cod_usuario
+  setValuesOnForm(form: Actividades): void {
+    this.createTaskA.setValue({
+      cod_usuario: form.usuario
      });
   }
 

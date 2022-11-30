@@ -1,0 +1,42 @@
+.form {
+    border-radius: .5em;
+    box-shadow: none;
+    color: black;
+    background-color: white;
+    padding: 5px;
+  
+    &__header {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; 
+      &__title {
+        text-align: center;
+      }
+      &__close-button {
+        border: 0;
+        box-shadow: none;
+        position: relative;
+        top: -10px;
+      }
+    }
+  
+    @media (min-width: 960px) {
+      &__header {
+        flex-direction: row;
+        &__button {
+          min-width: 10%;
+        }
+        h1 {
+          text-align: left;
+        }
+      }
+    }
+  }
+  
+  mat-datepicker-toggle {
+    color: black !important;
+  }
+  
+  mat-label {
+    color: black !important;
+  }

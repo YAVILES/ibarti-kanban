@@ -12,9 +12,14 @@ interface TaskEdit {
   cod_usuario: string, // Codigo de usuario asignado a la tarea (novedad)
   codigo: string, // Codigo de la tarea (novedad)
   fec_vencimiento:  string,
-  status: string // Estatus kanban de la tarea (novedad.cod_nov_status_kanban)
+  status: string ,// Estatus kanban de la tarea (novedad.cod_nov_status_kanban)
+  }
+interface TaskActividad {
+  usuario: string, // Código de usuario en sesión
+  activity: string, // Codigo de usuario asignado a la tarea (novedad)
+  codigo: string, // Codigo de la tarea (novedad)
+  
 }
-
 @Injectable({
   providedIn: 'root'
 })
@@ -38,6 +43,7 @@ export class IbartiService  {
 
   editTask(task: TaskEdit) {
     let data =  new FormData();
+    
     data.append('usuario', task.usuario);
     data.append('cod_usuario', task.cod_usuario);
     data.append('codigo', task.codigo);
@@ -49,8 +55,12 @@ export class IbartiService  {
       .pipe(map(data => data), catchError(this.handleError));
   }
   
+  getTasksEditActivity(task:TaskSchema) {
+    return this.http
+      .get<Array<{}>>(`${this.URL}/activity/?usuario=${env.USER_DEFAULT}&codigo=${task.codigo}`)
+      .pipe(map(data => data), catchError(this.handleError));
+  }
   getTaskshistorial(task:TaskSchema) {
-    console.log("POliiiiiiiiii"+task.codigo);
     return this.http
       .get<Array<{}>>(`${this.URL}/historial/?usuario=${getLocalStorage('userIbartiKanban')}&codigo=${task.codigo}`)
       .pipe(map(data => data), catchError(this.handleError));
@@ -65,7 +75,15 @@ export class IbartiService  {
   private handleError(res: HttpErrorResponse){
     return throwError(() => new Error(res.error || 'Server error'));
   }
-
+  CrearExcerciseTask(task:TaskActividad) {
+    let data =  new FormData();
+    data.append('usuario', task.usuario);
+    data.append('codigo', task.codigo);
+    data.append('activity',task.activity );
+    return this.http
+      .post(`${this.URL}/add_activity/?usuario=${env.USER_DEFAULT}`, data)
+      .pipe(map(data => data), catchError(this.handleError));
+  }
   formatearFecha(fecha: string) {
     const fechaArray = fecha.toString();
 
