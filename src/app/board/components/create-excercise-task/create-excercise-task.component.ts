@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment as env } from '../../../../environments/environment';
 import { DatePipe } from '@angular/common';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { getLocalStorage } from 'src/app/utils/localStorage';
 
 type DropdownObject = {
   codigo: string;
@@ -65,13 +66,11 @@ export class CreateExcerciseTaskComponent implements OnInit {
     } 
   }
   setForm(): void {
-    this.createTaskA= this.fb.group({
-      usuario: `${env.USER_DEFAULT}`,
+    this.createTaskA = this.fb.group({
+      usuario: `${getLocalStorage('userIbartiKanban')}`,
       activity: [this.data.taskacti?.activity ? this.data.taskacti.activity: ""],
       codigo : [this.data.task?.codigo],
-           
     });
-   
   }
 
   onFormAdd(): void {

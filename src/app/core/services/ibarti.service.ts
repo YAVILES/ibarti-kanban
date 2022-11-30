@@ -57,7 +57,7 @@ export class IbartiService  {
   
   getTasksEditActivity(task:TaskSchema) {
     return this.http
-      .get<Array<{}>>(`${this.URL}/activity/?usuario=${env.USER_DEFAULT}&codigo=${task.codigo}`)
+      .get<Array<{}>>(`${this.URL}/activity/?usuario=${getLocalStorage('userIbartiKanban')}&codigo=${task.codigo}`)
       .pipe(map(data => data), catchError(this.handleError));
   }
   getTaskshistorial(task:TaskSchema) {
@@ -81,7 +81,7 @@ export class IbartiService  {
     data.append('codigo', task.codigo);
     data.append('activity',task.activity );
     return this.http
-      .post(`${this.URL}/add_activity/?usuario=${env.USER_DEFAULT}`, data)
+      .post(`${this.URL}/add_activity/?usuario=${getLocalStorage('userIbartiKanban')}`, data)
       .pipe(map(data => data), catchError(this.handleError));
   }
   formatearFecha(fecha: string) {

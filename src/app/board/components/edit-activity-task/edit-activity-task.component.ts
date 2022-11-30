@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment as env } from '../../../../environments/environment';
 import { DatePipe } from '@angular/common';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { getLocalStorage } from 'src/app/utils/localStorage';
 
 type DropdownObject = {
   codigo: string;
@@ -69,7 +70,7 @@ export class EditActivityTaskComponent implements OnInit {
 
   setForm(): void {
     this.createTask = this.fb.group({
-      usuario: `${env.USER_DEFAULT}`,
+      usuario: `${getLocalStorage('userIbartiKanban')}`,
       cod_usuario: [this.data.task?.cod_usuario ? this.data.task.cod_usuario : ""],
       codigo : [this.data.task?.codigo],
       status: [this.data.task?.cod_nov_status_kanban ? this.data.task.cod_nov_status_kanban : ""],
