@@ -13,7 +13,7 @@
     >
       <mat-icon aria-hidden="false" aria-label="close icon">close</mat-icon>
     </button>
-    <button mat-raised-button color="primary">Delete</button>
+    <!-- <button mat-raised-button color="primary">Delete</button> -->
   </header>
   <div>
     <p><strong>Novedad:</strong> {{ data.task.novedad }}</p>
@@ -22,7 +22,7 @@
     
     <mat-selection-list formControlName="selectedTech">
     <mat-list-option *ngFor="let item of data.historial" [value]="item">
-      * {{item.cod_nov_proc}} -> {{item.actividad}} {{ item.fec_us_ing | date:'yyyy-MM-dd'}} {{ item.cod_us_mod }} ( {{ item.usuario_mod}}) 
+      * {{item.actividad}} <br> {{ item.fec_us_ing | date:'yyyy-MM-dd'}} ( {{ item.usuario_mod }}) 
     </mat-list-option>
   </mat-selection-list>
  
