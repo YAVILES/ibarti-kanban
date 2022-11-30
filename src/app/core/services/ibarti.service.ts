@@ -14,7 +14,7 @@ interface TaskEdit {
   }
 interface TaskActividad {
   usuario: string, // Código de usuario en sesión
-  activity: string, // Codigo de usuario asignado a la tarea (novedad)
+  actividad: string, // Codigo de usuario asignado a la tarea (novedad)
   codigo: string, // Codigo de la tarea (novedad)
   
 }
@@ -76,7 +76,7 @@ export class IbartiService  {
     let data =  new FormData();
     data.append('usuario', task.usuario);
     data.append('codigo', task.codigo);
-    data.append('activity',task.activity );
+    data.append('actividad',task.actividad );
     return this.http
       .post(`${this.URL}/add_activity/?usuario=${env.USER_DEFAULT}`, data)
       .pipe(map(data => data), catchError(this.handleError));

@@ -1,6 +1,6 @@
 export interface Actividades {
     usuario?:string;
-    activity?:string;
+    actividad?:string;
     codigo?:string;
     
   }
