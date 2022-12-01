@@ -1,47 +1,47 @@
 .form {
-    border-radius: .20em;
-    box-shadow: none;
+  border-radius: .20em;
+  box-shadow: none;
+  color: black;
+  background-color: white;
+  padding: 5px;
+
+  &__list {
     color: black;
-    background-color: white;
-    padding: 5px;
+  }
 
-    &__list {
-      color: black;
+  &__header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    &__title {
+      text-align: center;
     }
+    &__close-button {
+      border: 0;
+      box-shadow: none;
+      position: relative;
+      top: -5px;
+    }
+  }
 
+  @media (min-width: 960px) {
     &__header {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between; 
-      &__title {
-        text-align: center;
+      flex-direction: row;
+      &__button {
+        min-width: 20%;
       }
-      &__close-button {
-        border: 0;
-        box-shadow: none;
-        position: relative;
-        top: -5px;
-      }
-    }
-  
-    @media (min-width: 960px) {
-      &__header {
-        flex-direction: row;
-        &__button {
-          min-width: 20%;
-        }
-        h1 {
-          text-align: left;
-        }
+      h1 {
+        text-align: left;
       }
     }
   }
+}
 
-  .panelModal {
-    margin: 0px;
-    padding: 0px;
-  }
+.panelModal {
+  margin: 0px;
+  padding: 0px;
+}
 
-  mat-label {
-    color: black !important;
-  }
+mat-label {
+  color: black !important;
+}
