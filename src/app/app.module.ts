@@ -13,15 +13,20 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DatePipe } from '@angular/common';
 import { MatRippleModule } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 import {
    MatListModule
   
 } from '@angular/material/list';
+
+
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    MatExpansionModule,
     MatListModule,
     MatRippleModule,
     MatDatepickerModule,

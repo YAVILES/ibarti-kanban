@@ -22,7 +22,20 @@
     <mat-icon>more_vert</mat-icon>
   </button>
   
-  <p class="task__date"><strong>Fecha de Creación:</strong> {{ task.fec_us_ing }}</p>
+  
+  <mat-accordion>
+    
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          
+        </mat-panel-title>
+        <mat-panel-description>
+          {{panelOpenState ? 'Cerrar' : 'Ver'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p class="task__date"><strong>Fecha de Creación:</strong> {{ task.fec_us_ing }}</p>
   <div class="task__description">
     <p><strong>Cliente:</strong> {{ task.cliente }} / {{ task.ubicacion }}</p>
     <p><strong>Trabajador:</strong> {{ task.trabajador }} ({{task.cod_ficha}})</p>
@@ -31,6 +44,9 @@
     <p><strong>Usuario:</strong> {{ task.usuario != "" && task.usuario != null ? task.usuario : "Sin Asignar" }}</p>
     <p class="task__date"><strong>Fecha de Vencimiento:</strong> {{ task.fec_vencimiento | date:'yyyy-MM-dd'}}</p>
   </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  
   <button mat-icon-button  matTooltipPosition="above"  (click)=" handleEditactivityTask(task)">
     <mat-icon>more_hort</mat-icon>
   </button>

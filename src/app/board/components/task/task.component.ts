@@ -1,11 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { ListSchema, TaskSchema, Histori} from './../../../core';
 import { Actividades} from './../../../core/models/actividades';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskService } from 'src/app/core/services/task.service';
 import { HistorialComponent } from '../historial/historial.component';
 import { EditActivityTaskComponent } from '../edit-activity-task/edit-activity-task.component';
-
 import {  CreateExcerciseTaskComponent } from '../create-excercise-task/create-excercise-task.component';
 @Component({
   selector: 'app-task',
@@ -20,6 +19,7 @@ export class TaskComponent implements OnInit {
   @Output() editActivity: EventEmitter<Actividades> = new EventEmitter();
   @Input() list?: ListSchema;
   @Input() users: Histori[] = [];
+  panelOpenState = false;
   
   constructor(public dialog: MatDialog, public tasksService: TaskService) {}
 
