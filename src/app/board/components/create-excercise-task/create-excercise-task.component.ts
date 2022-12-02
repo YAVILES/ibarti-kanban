@@ -64,14 +64,13 @@ export class CreateExcerciseTaskComponent implements OnInit {
       this.formText = 'Crear';
     } 
   }
+  
   setForm(): void {
     this.createTaskA= this.fb.group({
       usuario: `${env.USER_DEFAULT}`,
       actividad: [this.data.taskacti?.actividad ? this.data.taskacti.actividad: ""],
-      codigo : [this.data.task?.codigo],
-           
+      codigo : [this.data.task?.codigo],    
     });
-   
   }
 
   onFormAdd(): void {
