@@ -21,7 +21,7 @@
     <p *ngIf="data?.historial?.length === 0"> Sin Actividades</p>
     <mat-list>
       <mat-list-item style="height: 20px"  class="form__list" *ngFor="let item of data.historial">
-        * {{item.actividad}}  {{ item.fec_us_ing }} {{item.status_kanban}} ( {{ item.usuario_mod }}) 
+        * {{item.actividad}}  {{ item.fec_us_ing | date:'yyyy-MM-dd hh:mm:ss' }} {{item.status_kanban}} ( {{ item.usuario_mod }}) 
            <mat-divider></mat-divider>
       </mat-list-item>  
     </mat-list> 
