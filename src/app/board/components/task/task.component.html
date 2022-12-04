@@ -43,7 +43,48 @@
         <p><strong>Usuario:</strong> {{ task.usuario != "" && task.usuario != null ? task.usuario : "Sin Asignar" }}</p>
         <p class="task__date"><strong>Fecha de Vencimiento:</strong> {{ task.fec_vencimiento | date:'yyyy-MM-dd'}}</p>
       </div>
+      <mat-accordion>
+    
+        <mat-expansion-panel (opened)="panelOpenStatedos = true"
+                             (closed)="panelOpenStatedos = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+            </mat-panel-title>
+            <mat-panel-description>
+              {{panelOpenStatedos ? 'Actividades' : 'Actividades'}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p *ngIf="actividades.length === 0"> Sin Actividades</p>
+          <mat-form-field appearance="fill" color="accent" style="width: 100% !Important;">
+            <mat-label>Actualizar</mat-label>
+            <select
+              matNativeControl
+              [(ngModel)]="selectedactividad"
+              name="actividad"
+              formControlName="actividad"
+            >
+              <option value="" selected></option>
+              <option *ngFor="let user of actividades" [value]="user.actividad">
+                {{ user.actividad }}  
+              </option>
+            </select>
+          </mat-form-field>
+          <mat-form-field appearance="fill" color="accent" style="width: 100% !Important;">
+            <mat-label><h3>Descripción Actividad:</h3></mat-label>
+            <textarea matInput placeholder="" formControlName="actividadnueva"></textarea>
+            
+          </mat-form-field>
+          <div  style="width: 100% !Important;">
+          <button mat-icon-button  matTooltipPosition="above"  (click)="handleModificarctivityTask (task)">
+            <mat-icon>update</mat-icon>
+          </button>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    
     </mat-expansion-panel>
+    
+  
   </mat-accordion>
   
   <button mat-icon-button  matTooltipPosition="above"  (click)=" handleEditactivityTask(task)">
