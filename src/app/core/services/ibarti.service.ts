@@ -90,12 +90,13 @@ export class IbartiService  {
       .pipe(map(data => data), catchError(this.handleError));
   }
   CrearUpdateActividadTask(task:listaactividades) {
+    console.log(task);
     let data =  new FormData();
-    data.append('usuario', task.cod_us_mod);
+    data.append('usuario', `${env.USER_DEFAULT}`);
     data.append('codigo', task.codigo);
     data.append('actividad',task.actividad );
     return this.http
-      .post(`${this.URL}/add_activity/?usuario=${env.USER_DEFAULT}`, data)
+      .post(`${this.URL}/edit_activity/?usuario=${env.USER_DEFAULT}`, data)
       .pipe(map(data => data), catchError(this.handleError));
   }
   formatearFecha(fecha: string) {

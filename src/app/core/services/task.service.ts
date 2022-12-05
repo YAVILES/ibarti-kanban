@@ -70,7 +70,7 @@ export class TaskService {
       const elementsIndex = this.list.findIndex(
         (element) => element.codigo === listId
       );
-      const task = this.list[elementsIndex].tasks.map((element) => {
+      const task = this.list[elementsIndex]?.tasks.map((element) => {
         if (element.codigo === data.codigo) {
           element.cod_nov_status_kanban = listId
         }
