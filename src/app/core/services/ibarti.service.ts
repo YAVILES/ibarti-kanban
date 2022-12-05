@@ -18,6 +18,14 @@ interface TaskActividad {
   codigo: string, // Codigo de la tarea (novedad)
   
 }
+interface listaactividades {
+  codigo:string;
+  actividad:string;
+  fec_us_ing : string;
+  cod_us_mod: string;
+  usuario_mod	:string;
+      
+    }
 @Injectable({
   providedIn: 'root'
 })
@@ -75,6 +83,15 @@ export class IbartiService  {
   CrearExcerciseTask(task:TaskActividad) {
     let data =  new FormData();
     data.append('usuario', task.usuario);
+    data.append('codigo', task.codigo);
+    data.append('actividad',task.actividad );
+    return this.http
+      .post(`${this.URL}/add_activity/?usuario=${env.USER_DEFAULT}`, data)
+      .pipe(map(data => data), catchError(this.handleError));
+  }
+  CrearUpdateActividadTask(task:listaactividades) {
+    let data =  new FormData();
+    data.append('usuario', task.cod_us_mod);
     data.append('codigo', task.codigo);
     data.append('actividad',task.actividad );
     return this.http
