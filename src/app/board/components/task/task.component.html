@@ -1,7 +1,7 @@
 <div 
   class="task"
   id="task_{{task.codigo}}"
-  [ngClass]="{'task--vencida': task.vencido === '1', 'task--activa': task.vencido === '0'}">
+  [ngClass]="{'task--vencida': task.vencido == '1', 'task--activa': task.vencido == '0'}">
   <div class="task__icon">
     <mat-icon aria-hidden="false" aria-label="urgent icon" *ngIf="task.cod_nov_status_kanban === '01'">alarm</mat-icon>
     <mat-icon aria-hidden="false" aria-label="medium icon" *ngIf="task.cod_nov_status_kanban === '02'">autorenew</mat-icon>
@@ -10,7 +10,6 @@
   </div>
   <div class="task__title">
     {{task.tipo}}
-    <h3>{{ task.novedad }}</h3>
   </div>
   <button *ngIf="isAdmin == true"  matTooltip="Editar tarea" matTooltipClass="custom-tooltip-blue" matTooltipPosition="above" mat-icon-button (click)="handleEditTask(task)">
     <mat-icon aria-label="icon-button to edit">edit</mat-icon>
@@ -22,15 +21,72 @@
     <mat-icon>more_vert</mat-icon>
   </button>
   
-  <p class="task__date"><strong>Fecha de Creación:</strong> {{ task.fec_us_ing }}</p>
-  <div class="task__description">
-    <p><strong>Cliente:</strong> {{ task.cliente }} / {{ task.ubicacion }}</p>
-    <p><strong>Trabajador:</strong> {{ task.trabajador }} ({{task.cod_ficha}})</p>
-    <p><strong>Observación:</strong> {{ task.observacion }}</p>
-    <p *ngIf="task?.respuesta"><strong>Respuesta:</strong> {{ task.respuesta }}</p>
-    <p *ngIf="isAdmin == true"><strong>Usuario:</strong> {{ task.usuario != "" && task.usuario != null ? task.usuario : "Sin Asignar" }}</p>
-    <p class="task__date"><strong>Fecha de Vencimiento:</strong> {{ task.fec_vencimiento | date:'yyyy-MM-dd'}}</p>
-  </div>
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ task.novedad }}
+        </mat-panel-title>
+        <span style="padding-right: 10px;">
+          {{panelOpenState ? 'Cerrar' : 'Ver'}}
+        </span> 
+        <!-- <mat-panel-description>
+          {{panelOpenState ? 'Cerrar' : 'ver'}}
+        </mat-panel-description> -->
+      </mat-expansion-panel-header>
+      <p class="task__date"><strong>Fecha de Creación:</strong> {{ task.fec_us_ing }}</p>
+      <div class="task__description">
+        <p><strong>Cliente:</strong> {{ task.cliente }} / {{ task.ubicacion }}</p>
+        <p><strong>Trabajador:</strong> {{ task.trabajador }} ({{task.cod_ficha}})</p>
+        <p><strong>Observación:</strong> {{ task.observacion }}</p>
+        <p *ngIf="task?.respuesta"><strong>Respuesta:</strong> {{ task.respuesta }}</p>
+        <p><strong>Usuario:</strong> {{ task.usuario != "" && task.usuario != null ? task.usuario : "Sin Asignar" }}</p>
+        <p class="task__date"><strong>Fecha de Vencimiento:</strong> {{ task.fec_vencimiento | date:'yyyy-MM-dd'}}</p>
+      </div>
+      <div [formGroup]="createTaskA">
+      <mat-accordion>
+    
+        <mat-expansion-panel (opened)="panelOpenStatedos = true"
+                             (closed)="panelOpenStatedos = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+            </mat-panel-title>
+            <mat-panel-description>
+              {{panelOpenStatedos ? 'Actividades' : 'Actualizar Actividad'}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p *ngIf="actividades.length === 0"> Sin Actividades</p>
+          <mat-form-field appearance="fill" color="accent" style="width: 100% !Important;">
+            <mat-label>Actualizar</mat-label>
+            <select
+              matNativeControl
+              [(ngModel)]="selectedactividad"
+              formControlName="codigo"
+            >
+              <option value="" selected></option>
+              <option *ngFor="let user of actividades" [value]="user.codigo">
+                {{ user.codigo }}  {{ user.actividad }}  
+              </option>
+            </select>
+          </mat-form-field>
+          <mat-form-field appearance="fill" color="accent" style="width: 100% !Important;">
+            <mat-label><h3>Descripción Actividad:</h3></mat-label>
+            <textarea matInput placeholder=""  formControlName="actividad"></textarea>
+            
+          </mat-form-field>
+          <div  style="width: 100% !Important;">
+          <button mat-icon-button  matTooltipPosition="above"  (click)="handleModificarctivityTask()">
+            <mat-icon>update</mat-icon>
+          </button>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      </div>
+    </mat-expansion-panel>
+    
+  
+  </mat-accordion>
+  
   <button mat-icon-button  matTooltipPosition="above"  (click)=" handleEditactivityTask(task)">
     <mat-icon>more_hort</mat-icon>
   </button>

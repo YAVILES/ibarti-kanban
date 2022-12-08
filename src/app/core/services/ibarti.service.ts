@@ -20,6 +20,14 @@ interface TaskActividad {
   codigo: string, // Codigo de la tarea (novedad)
   
 }
+interface listaactividades {
+  codigo:string;
+  actividad:string;
+  fec_us_ing : string;
+  cod_us_mod: string;
+  usuario_mod	:string;
+      
+    }
 @Injectable({
   providedIn: 'root'
 })
@@ -82,6 +90,16 @@ export class IbartiService  {
     data.append('actividad',task.actividad );
     return this.http
       .post(`${this.URL}/add_activity/?usuario=${getLocalStorage('userIbartiKanban')}`, data)
+      .pipe(map(data => data), catchError(this.handleError));
+  }
+  CrearUpdateActividadTask(task:listaactividades) {
+    console.log(task);
+    let data =  new FormData();
+    data.append('usuario', `${env.USER_DEFAULT}`);
+    data.append('codigo', task.codigo);
+    data.append('actividad',task.actividad );
+    return this.http
+      .post(`${this.URL}/edit_activity/?usuario=${env.USER_DEFAULT}`, data)
       .pipe(map(data => data), catchError(this.handleError));
   }
   formatearFecha(fecha: string) {

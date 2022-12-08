@@ -1,12 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { ListSchema, TaskSchema, Histori} from './../../../core';
 import { Actividades} from './../../../core/models/actividades';
+import { FormBuilder, FormGroup,Validators} from '@angular/forms';
+import { listaactividades} from './../../../core/models/listaactividades';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskService } from 'src/app/core/services/task.service';
 import { getLocalStorage } from 'src/app/utils/localStorage';
 import { HistorialComponent } from '../historial/historial.component';
 import { EditActivityTaskComponent } from '../edit-activity-task/edit-activity-task.component';
 import { CreateExcerciseTaskComponent } from '../create-excercise-task/create-excercise-task.component';
+import { IbartiService } from 'src/app/core/services/ibarti.service';
+import { environment as env } from '../../../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-task',
@@ -22,11 +27,18 @@ export class TaskComponent implements OnInit {
   @Input() list?: ListSchema;
   isAdmin: boolean = false;
   @Input() users: Histori[] = [];
-  
-  constructor(public dialog: MatDialog, public tasksService: TaskService) {}
+  panelOpenState = false;
+  createTaskA!: FormGroup;
+  actividades:listaactividades[]= [];
+  selectedactividad: string | undefined = "";
+  panelOpenStatedos = false;
+  constructor(public dialog: MatDialog, public tasksService: TaskService,private ibartiService: IbartiService, private fb:FormBuilder,public toastr:ToastrService) {}
 
   ngOnInit(): void {
     this.isAdmin = getLocalStorage('admin_kanban') == 'T'
+    this.getDataactividades();
+    this.selectedactividad = '';
+    this.setForm();
   }
 
   handleEditTask(task: TaskSchema) {
@@ -58,4 +70,38 @@ export class TaskComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
+  getDataactividades(): void {
+   
+    this.ibartiService.getTasksEditActivity(this.task)
+      .subscribe(
+        (response: any) => this.actividades = response,
+        (error: string) => (console.log('Ups! we have an error: ', error))
+    );
+    
+  }
+  setForm(): void {
+    this.createTaskA= this.fb.group({
+      usuario: `${getLocalStorage('userIbartiKanban')}`,
+      actividad: ["", Validators.required],
+      codigo: ["", Validators.required],
+      editada:["1"],    
+    });
+  }
+
+  handleModificarctivityTask(): void {
+    
+    if ( this.createTaskA.valid){
+      this.ibartiService.CrearUpdateActividadTask(this.createTaskA.value)
+      .subscribe(
+        (data: any): void => {
+          this.toastr.info("Datos Guardados con Exitos!.");
+          this.tasksService.updateTask(this.createTaskA.value, this.task.listId ?? '')
+        },
+        (error: any) => {
+          this.toastr.error("Error , Cargando Datos del Task");
+          
+        });
+    }
+  }
+ 
 }

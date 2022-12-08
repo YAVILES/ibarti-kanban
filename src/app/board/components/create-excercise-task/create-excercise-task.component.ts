@@ -65,11 +65,12 @@ export class CreateExcerciseTaskComponent implements OnInit {
       this.formText = 'Crear';
     } 
   }
+  
   setForm(): void {
     this.createTaskA = this.fb.group({
       usuario: `${getLocalStorage('userIbartiKanban')}`,
       actividad: [this.data.taskacti?.actividad ? this.data.taskacti.actividad: ""],
-      codigo : [this.data.task?.codigo],
+      codigo : [this.data.task?.codigo],    
     });
   }
 
