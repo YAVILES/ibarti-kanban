@@ -4,7 +4,6 @@
     color: black;
     background-color: white;
     padding: 5px;
-    width: 500px;
   
     &__header {
       display: flex;
@@ -40,4 +39,7 @@
   
   mat-label {
     color: black !important;
+  }
+  .example-full-width {
+    width: 100%;
   }
