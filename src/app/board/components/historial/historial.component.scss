@@ -2,7 +2,7 @@
     border-radius: .20em;
     box-shadow: none;
     color: black;
-    background-color: white;
+    background-color:#51A351;
     padding: 5px;
 
     &__list {
@@ -44,4 +44,17 @@
 
   mat-label {
     color: black !important;
+  }
+  :host{
+    color: black;
+    width: 100%;
+    min-height: 150px;
+    max-height: 350px;
+    height: 10%;
+    display: flex;
+    flex-direction: column;
+    mat-toolbar {
+      flex-grow: 0;
+    }
+    
   }

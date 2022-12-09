@@ -31,6 +31,7 @@ type DropdownObject = {
   styleUrls: ['./historial.component.scss']
 })
 export class HistorialComponent implements OnInit {
+  
   @Output() editTask: EventEmitter<TaskSchema> = new EventEmitter();
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
   @Input() connectedOverlay!: CdkConnectedOverlay;
@@ -42,6 +43,7 @@ export class HistorialComponent implements OnInit {
   id: string = "";
   errort: boolean=false;
   status:string | undefined = "";
+ 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {task: TaskSchema, listId: string, historial: Histori[]},
     private fb: FormBuilder,public toastr:ToastrService,
@@ -49,7 +51,7 @@ export class HistorialComponent implements OnInit {
     private tasksService: TaskService,
     private ibartiService: IbartiService
   ) { }
-
+ 
   ngOnInit(): void {
     this.setForm();
     this.selectedUser = '';
