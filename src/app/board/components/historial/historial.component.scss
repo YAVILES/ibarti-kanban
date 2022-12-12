@@ -4,7 +4,8 @@
     color: black;
     background-color:#51A351;
     padding: 5px;
-
+    overflow-y: auto;
+    
     &__list {
       color: black;
     }
