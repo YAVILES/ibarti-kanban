@@ -16,8 +16,8 @@
     <!-- <button mat-raised-button color="primary">Delete</button> -->
   </header>
   <div>
-    <p><strong>Novedad:</strong> {{ data.task.novedad }}</p>
-    <p><strong>Vencimiento:</strong> {{ data.task.fec_vencimiento }}</p>
+    <!-- <p><strong>Novedad:</strong> {{ data.task.novedad }}</p>
+    <p><strong>Vencimiento:</strong> {{ data.task.fec_vencimiento }}</p>-->
     <p *ngIf="data?.historial?.length === 0"> Sin Actividades</p>
     <mat-list>
       <mat-list-item style="height: 20px"  class="host" *ngFor="let item of data.historial">
