@@ -9,7 +9,7 @@
     <mat-icon aria-hidden="false" aria-label="medium icon" *ngIf="task.cod_nov_status_kanban === '04'">delete</mat-icon>
   </div>
   <div class="task__title">
-    {{task.tipo}}
+    {{task.codigo}} {{task.usuario != null ? task.usuario : 'SIN ASIGNAR'}}
   </div>
   <button  matTooltip="Editar tarea" matTooltipClass="custom-tooltip-blue" matTooltipPosition="above" mat-icon-button (click)="handleEditTask(task)">
     <mat-icon aria-label="icon-button to edit">edit</mat-icon>
@@ -25,7 +25,7 @@
     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{ task.novedad }}
+          {{ task.cliente }}
         </mat-panel-title>
         <span style="padding-right: 10px;">
           {{panelOpenState ? 'Cerrar' : 'Ver'}}
