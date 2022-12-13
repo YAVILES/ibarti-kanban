@@ -18,7 +18,7 @@
     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          * {{item.fec_us_ing | date:'yyyy-MM-dd'}} -> {{item.status_kanban}} {{ item.usuario_mod }} 
+          * {{item.fec_us_ing | date:'yyyy-MM-dd hh:mm:ss'}} -> {{item.status_kanban}} {{ item.usuario_mod }} 
         </mat-panel-title>
         <span style="padding-right: 10px;">
           {{panelOpenState ? 'Cerrar' : 'Ver'}}
