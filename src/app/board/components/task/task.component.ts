@@ -53,7 +53,7 @@ export class TaskComponent implements OnInit {
   }
   handleEditactivityTask(task:TaskSchema): void {
     const dialogRef = this.dialog.open(EditActivityTaskComponent, {
-      data: {task: this.task, listId: this.list?.codigo, users: this.users, panelClass: "panelModal"},
+      data: {task: this.task, listId: this.list?.codigo, users: this.users},
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(`Dialog result: ${result}`);
@@ -61,7 +61,7 @@ export class TaskComponent implements OnInit {
   }
   handleExecersiTask(taskacti:Actividades): void {
     const dialogRef = this.dialog.open(CreateExcerciseTaskComponent, {
-      data: {task: this.task,  taskacti: this.taskacti,listId: this.list?.codigo, users: this.users, panelClass: "panelModal"},
+      data: {task: this.task,  taskacti: this.taskacti,listId: this.list?.codigo, users: this.users},
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(`Dialog result: ${result}`);

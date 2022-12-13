@@ -1,11 +1,6 @@
-<form fxLayout="column" fxLayoutGap="100px"
-  class="form"
-  [formGroup]="createTask"
-  (ngSubmit)="close()"
-  novalidate
->
+<div class="form" mat-dialog-content>
   <header class="form__header">
-    <h3 class="form__header__title">{{ formText }} Tarea </h3>
+    <h3 class="form__header__title">Actividades Tarea </h3>
     <button
       class="form__header__close-button"
       mat-raised-button
@@ -19,9 +14,7 @@
     <!-- <p><strong>Novedad:</strong> {{ data.task.novedad }}</p>
     <p><strong>Vencimiento:</strong> {{ data.task.fec_vencimiento }}</p>-->
     <p *ngIf="data?.historial?.length === 0"> Sin Actividades</p>
-    <mat-list>
-      <mat-list-item  class="host" *ngFor="let item of data.historial">
-    <mat-accordion>
+    <mat-accordion *ngFor="let item of data.historial">
     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -34,16 +27,13 @@
           {{panelOpenState ? 'Cerrar' : 'ver'}}
         </mat-panel-description> -->
       </mat-expansion-panel-header>
-       <div class="task__description">
-        <p><strong>Descripcion:</strong>{{item.actividad}} </p>
-        </div>
+      <mat-panel-description>
+        <p class="task__description"> {{item.actividad}} </p>
+      </mat-panel-description>
       
     </mat-expansion-panel>
     
   
   </mat-accordion>
-            <mat-divider></mat-divider>
-      </mat-list-item>  
-    </mat-list> 
- </div> 
-</form>
+  </div> 
+</div>
