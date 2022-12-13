@@ -40,6 +40,7 @@ export class EditActivityTaskComponent implements OnInit {
   fechavence :string="" ;
   formText: string = "Edit Actividades";
   createTask!: FormGroup;
+  panelOpenState = false;
   selectedUser: string | undefined = "";
   id: string = "";
   errort: boolean=false;

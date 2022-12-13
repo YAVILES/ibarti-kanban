@@ -20,6 +20,7 @@
     <p *ngIf="data?.historial?.length === 0"> Sin historial </p>
     <mat-list>
       <mat-list-item style="height: 30px"  class="host" *ngFor="let item of data.historial">
+       
         * {{item.usuario_mod}} -> {{item.usuario}} {{ item.fec_vencimiento | date:'yyyy-MM-dd'}} {{ item.status_kanban }} ( {{ item.fec_us_ing }})
           <mat-divider></mat-divider>
       </mat-list-item>  
