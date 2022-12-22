@@ -32,8 +32,7 @@ export class TaskComponent implements OnInit {
   constructor(public dialog: MatDialog, public tasksService: TaskService,private ibartiService: IbartiService, private fb:FormBuilder,public toastr:ToastrService) {}
 
   ngOnInit(): void {
-   
-    this.getDataactividades();
+   this.getDataactividades();
     this.selectedactividad = '';
     this.setForm();
   }

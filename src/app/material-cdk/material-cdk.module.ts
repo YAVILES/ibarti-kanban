@@ -13,6 +13,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatListModule } from '@angular/material/list';
 import {MatExpansionModule} from '@angular/material/expansion'; 
+import {MatTableModule} from '@angular/material/table';
 //CDK
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -25,6 +26,7 @@ const components = [
   MatToolbarModule,
   MatIconModule,
   MatButtonModule,
+  MatTableModule,
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,

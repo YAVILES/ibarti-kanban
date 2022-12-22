@@ -10,11 +10,13 @@ import { ListComponent } from './components/list/list.component';
 import { TaskComponent } from './components/task/task.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { HistorialComponent } from './components/historial/historial.component';
+import { CreateexcelComponent } from './components/createexcel/createexcel.component';
+
 import { CreateExcerciseTaskComponent } from './components/create-excercise-task/create-excercise-task.component';
 import { EditActivityTaskComponent } from './components/edit-activity-task/edit-activity-task.component';
 
 @NgModule({
-  declarations: [BoardComponent, ListComponent, TaskComponent, CreateTaskComponent, HistorialComponent, CreateExcerciseTaskComponent, EditActivityTaskComponent],
+  declarations: [BoardComponent, ListComponent, TaskComponent, CreateTaskComponent, HistorialComponent, CreateExcerciseTaskComponent, EditActivityTaskComponent,CreateexcelComponent],
   imports: [
     CommonModule,
     BoardRoutingModule, 

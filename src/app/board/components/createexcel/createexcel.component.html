@@ -1,0 +1,59 @@
+<form fxLayout="column" fxLayoutGap="5px"
+  class="form"
+  [formGroup]="createTask"
+  (ngSubmit)="onFormAdd()"
+  novalidate
+>
+  <header class="form__header">
+    <h3 class="form__header__title">{{ formText }} Excel </h3>
+   
+    <button
+     mat-raised-button
+    color="accent"
+    (click)="exportArray()"
+  >
+    <mat-icon aria-hidden="false" aria-label="close icon">book</mat-icon>
+  </button>  
+  <button
+  class="form__header__close-button"
+  mat-raised-button
+  [mat-dialog-close]="true"
+>
+  <mat-icon aria-hidden="false" aria-label="close icon">close</mat-icon>
+</button> 
+  </header>
+  <div>
+  <mat-form-field appearance="fill" color="accent">
+    <h3><mat-label>Desde</mat-label></h3>
+    <input name="fec_desde" formControlName="fec_desde" matInput [matDatepicker]="picker">
+    <mat-hint>YYYY/MM/DD</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+    
+  <mat-form-field appearance="fill" color="accent">
+    <h3><mat-label>Hasta</mat-label></h3>
+    <input name="fec_hasta" formControlName="fec_hasta" matInput [matDatepicker]="picker1">
+    <mat-hint>YYYY/MM/DD</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+</div>
+<mat-table [dataSource]="dataSource"  style="height: 30px"  class="host">
+	<ng-container matColumnDef="name">
+		<mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+		<mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+	</ng-container>
+
+	<ng-container matColumnDef="symbol">
+		<mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
+		<mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
+	</ng-container>
+
+	<mat-header-row *matHeaderRowDef="matColumns"></mat-header-row>
+	<mat-row *matRowDef="let row; columns: matColumns;"></mat-row>
+</mat-table>
+
+
+</form>
+
