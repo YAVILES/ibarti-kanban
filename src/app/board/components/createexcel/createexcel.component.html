@@ -25,7 +25,7 @@
   <div>
   <mat-form-field appearance="fill" color="accent">
     <h3><mat-label>Desde</mat-label></h3>
-    <input name="fec_desde" formControlName="fec_desde" matInput [matDatepicker]="picker">
+    <input name="fecha_desde" formControlName="fecha_desde" matInput [matDatepicker]="picker">
     <mat-hint>YYYY/MM/DD</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
@@ -33,7 +33,7 @@
     
   <mat-form-field appearance="fill" color="accent">
     <h3><mat-label>Hasta</mat-label></h3>
-    <input name="fec_hasta" formControlName="fec_hasta" matInput [matDatepicker]="picker1">
+    <input name="fecha_hasta" formControlName="fecha_hasta" matInput [matDatepicker]="picker1">
     <mat-hint>YYYY/MM/DD</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
     <mat-datepicker #picker1></mat-datepicker>
@@ -53,7 +53,6 @@
 	<mat-header-row *matHeaderRowDef="matColumns"></mat-header-row>
 	<mat-row *matRowDef="let row; columns: matColumns;"></mat-row>
 </mat-table>
-
 
 </form>
 

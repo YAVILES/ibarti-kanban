@@ -67,6 +67,7 @@ export class CreateexcelComponent implements OnInit {
   matColumns: string[] = ["name", "symbol"];
   dataSource = ELEMENT_DATA;
   reverseDataSource = [...ELEMENT_DATA].reverse();
+  PeriodicElement:any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {task: TaskSchema, listId: string, users: Users[]},
     private fb: FormBuilder,public toastr:ToastrService,
@@ -93,10 +94,10 @@ export class CreateexcelComponent implements OnInit {
   setForm(): void {
     this.createTask = this.fb.group({
       usuario: `${env.USER_DEFAULT}`,
-      fec_desde:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"],
-      fec_hasta:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"]
+      fecha_desde:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"],
+      fecha_hasta:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"]
     });
-    // this.getDatausuarios();
+    //this.getDatausuarios();
   }
 
   onFormAdd(): void {
@@ -138,7 +139,7 @@ export class CreateexcelComponent implements OnInit {
   getDatausuarios(): void {
     this.ibartiService.getUsuarios()
       .subscribe(
-        (response: any) => this.users = response,
+        (response: any) => this.dataSource = response,
         (error: string) => (console.log('Ups! we have an error: ', error))
     );
  }
@@ -152,10 +153,26 @@ export class CreateexcelComponent implements OnInit {
     return `${fechaFormateada} ${fecha.split(/[\s]/g)[1]}-00`;
   }
   exportArray() {
-    const onlyNameAndSymbolArr: Partial<PeriodicElement>[] = this.dataSource.map(x => ({
-      name: x.name,
-      symbol: x.symbol
-    }));
-    TableUtil.exportArrayToExcel(onlyNameAndSymbolArr, "ExampleArray");
+    console.log("Descargando..");
+    const filename = 'reporte_${Math.random()}.xlsx' ;
+    this.ibartiService.getreport(this.createTask.value).subscribe(response =>{
+       this.manageExcelfile(response,filename);
+       this.toastr.info("Archivo Excel Generado con exito!.");
+    })
+
+   
   }
+  manageExcelfile(response:any,filename:string) {
+    const datatype =response.type;
+    const binaryData =[];
+    binaryData.push(response);
+    const filePath=window.URL.createObjectURL(new Blob(binaryData,{type:datatype}));
+    const dowloandlink = document.createElement('a');
+    dowloandlink.href=filePath;
+    dowloandlink.setAttribute('download',filename);
+    document.body.appendChild(dowloandlink);
+    dowloandlink.click();
+  }
+  
+  
   }
