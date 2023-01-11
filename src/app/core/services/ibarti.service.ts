@@ -80,7 +80,7 @@ export class IbartiService  {
   }
   getreport(task:TaskExcel) {
    const headers= new HttpHeaders().set('Content-Type','application/json');
-     return this.http.get(`${this.URL}/export/?usuario=${env.USER_DEFAULT}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`,{headers,responseType: 'blob' as 'blob'});
+     return this.http.get(`${this.URL}/export/?usuario=${env.USER_DEFAULT}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`);
   }
 
   getTaskshistorial(task:TaskSchema) {
