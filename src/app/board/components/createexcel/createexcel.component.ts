@@ -156,8 +156,8 @@ export class CreateexcelComponent implements OnInit {
     console.log("Descargando..");
     const filename = 'reporte_${Math.random()}.xlsx' ;
     this.ibartiService.getreport(this.createTask.value).subscribe(response =>{
-       this.manageExcelfile(response,filename);
-       this.toastr.info("Archivo Excel Generado con exito!.");
+      // this.manageExcelfile(response,filename);
+      this.toastr.info("Archivo Excel Generado con exito!.");
     })
 
    
@@ -169,7 +169,7 @@ export class CreateexcelComponent implements OnInit {
     const filePath=window.URL.createObjectURL(new Blob(binaryData,{type:datatype}));
     const dowloandlink = document.createElement('a');
     dowloandlink.href=filePath;
-    dowloandlink.setAttribute('download',filename);
+    dowloandlink.setAttribute('download', 'report-tareas');
     document.body.appendChild(dowloandlink);
     dowloandlink.click();
   }

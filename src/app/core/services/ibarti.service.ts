@@ -79,8 +79,14 @@ export class IbartiService  {
       
   }
   getreport(task:TaskExcel) {
-   const headers= new HttpHeaders().set('Content-Type','application/json');
-     return this.http.get(`${this.URL}/export/?usuario=${env.USER_DEFAULT}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`);
+    //  const headers= new HttpHeaders().set('Content-Type','application/json');
+    //  return this.http.get(`${this.URL}/export/?usuario=${env.USER_DEFAULT}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`);
+    const dowloandlink = document.createElement('a');
+    dowloandlink.href=`${this.URL}/export/?usuario=${env.USER_DEFAULT}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`;
+    dowloandlink.setAttribute('download', 'report-tareas');
+    document.body.appendChild(dowloandlink);
+    dowloandlink.click();
+    return new Observable;
   }
 
   getTaskshistorial(task:TaskSchema) {
