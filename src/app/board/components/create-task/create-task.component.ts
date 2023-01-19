@@ -71,7 +71,7 @@ export class CreateTaskComponent implements OnInit {
   setForm(): void {
     this.createTask = this.fb.group({
       usuario: `${env.USER_DEFAULT}`,
-      cod_usuario: [this.data.task?.cod_usuario ? this.data.task.cod_usuario : ""],
+      cod_usuario: [this.data.task?.cod_usuario ? this.data.task.cod_usuario : "null"],
       codigo : [this.data.task?.codigo],
       status: [this.data.task?.cod_nov_status_kanban ? this.data.task.cod_nov_status_kanban : ""],
       novedad: [this.data.task?.novedad ? this.data.task.novedad: ""],
@@ -90,7 +90,8 @@ export class CreateTaskComponent implements OnInit {
           this.tasksService.updateTask(this.createTask.value, this.data.listId ?? '')
         },
         error => {
-          this.toastr.error("Error , Cargando Datos del Task");
+          console.log(this.createTask.value);
+          this.toastr.error("Error , Cargando Datos del Task ");
           this.errort=true;
         });
     }

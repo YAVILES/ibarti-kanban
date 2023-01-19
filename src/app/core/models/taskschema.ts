@@ -23,4 +23,7 @@ export interface TaskSchema {
   fec_vencimiento:string;
   listId?: string;
   vencido?:string;
+  fec_asignacion?:string;
+  fec_cierre?:string;
+  horas_hombres?:string;
 }

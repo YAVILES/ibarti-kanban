@@ -38,8 +38,7 @@ export class TaskComponent implements OnInit {
   }
 
   handleEditTask(task: TaskSchema) {
-    
-    this.editTask.emit(task);
+   this.editTask.emit(task);
   }
 
   handleHistorialTask(task:TaskSchema): void {

@@ -16,6 +16,7 @@ interface TaskEdit {
   codigo: string, // Codigo de la tarea (novedad)
   fec_vencimiento:  string,
   status: string ,// Estatus kanban de la tarea (novedad.cod_nov_status_kanban)
+ 
   }
 interface TaskActividad {
   usuario: string, // Código de usuario en sesión
@@ -60,8 +61,7 @@ export class IbartiService  {
     data.append('codigo', task.codigo);
     data.append('fec_vencimiento', task?.fec_vencimiento ? this.formatearFecha(task.fec_vencimiento) : 'null');
     data.append('status', task.status);
-
-    return this.http
+     return this.http
       .post(`${this.URL}/edit_task/?usuario=${env.USER_DEFAULT}`, data)
       .pipe(map(data => data), catchError(this.handleError));
   }
