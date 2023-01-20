@@ -31,13 +31,13 @@ export class HeaderComponent implements OnInit {
   }
 
   getDataactividades(): void {
-   
-    this.ibartiService.getTasksEditActivity(this.task)
-      .subscribe(
-        (response: any) => this.actividades = response,
-        (error: string) => (console.log('Ups! we have an error: ', error))
-    );
-    
+   if(this.task){
+      this.ibartiService.getTasksEditActivity(this.task)
+        .subscribe(
+          (response: any) => this.actividades = response,
+          (error: string) => (console.log('Ups! we have an error: ', error))
+      );
+    }
   }
   setForm(): void {
     this.createTaskA= this.fb.group({
