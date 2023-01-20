@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment as env } from '../../../environments/environment';
 import { getLocalStorage } from 'src/app/utils/localStorage';
 
 import { DatePipe } from '@angular/common';
 import { TaskSchema } from '../models';
+interface TaskExcel {
+  usuario: string, // Código de usuario en sesión
+  fecha_desde:  string,
+  fecha_hasta: string ,// Estatus kanban de la tarea (novedad.cod_nov_status_kanban)
+  }
 interface TaskEdit {
   usuario: string, // Código de usuario en sesión
   cod_usuario: string, // Codigo de usuario asignado a la tarea (novedad)
@@ -68,6 +73,24 @@ export class IbartiService  {
       .get<Array<{}>>(`${this.URL}/activity/?usuario=${getLocalStorage('userIbartiKanban')}&codigo=${task.codigo}`)
       .pipe(map(data => data), catchError(this.handleError));
   }
+  getinfoexcel(task:TaskExcel) {
+    console.log(`POlicia :${this.formatearFecha(task.fecha_desde)}`);
+    return this.http
+      .get<Array<{}>>(`${this.URL}/export/?usuario=${env.USER_DEFAULT}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`)
+      .pipe(map(data => data), catchError(this.handleError));
+      
+  }
+  getreport(task:TaskExcel) {
+    //  const headers= new HttpHeaders().set('Content-Type','application/json');
+    //  return this.http.get(`${this.URL}/export/?usuario=${env.USER_DEFAULT}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`);
+    const dowloandlink = document.createElement('a');
+    dowloandlink.href=`${this.URL}/export/?usuario=${env.USER_DEFAULT}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`;
+    dowloandlink.setAttribute('download', 'report-tareas');
+    document.body.appendChild(dowloandlink);
+    dowloandlink.click();
+    return new Observable;
+  }
+
   getTaskshistorial(task:TaskSchema) {
     return this.http
       .get<Array<{}>>(`${this.URL}/historial/?usuario=${getLocalStorage('userIbartiKanban')}&codigo=${task.codigo}`)
@@ -108,7 +131,7 @@ export class IbartiService  {
     // Pasamos la fecha Date
     const date = new Date(fechaArray);
 
-    const fechaFormateada = this.miDatePipe.transform(date, 'yyyy-MM-dd hh:mm:ss');
+    const fechaFormateada = this.miDatePipe.transform(date, 'yyyy-MM-dd');
 
     return `${fechaFormateada}`;
   }
