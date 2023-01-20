@@ -6,7 +6,6 @@ import { listaactividades} from './../../../core/models/listaactividades';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskService } from 'src/app/core/services/task.service';
 import { IbartiService } from 'src/app/core/services/ibarti.service';
-import { environment as env } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { getLocalStorage } from 'src/app/utils/localStorage';
 @Component({
@@ -32,13 +31,13 @@ export class HeaderComponent implements OnInit {
   }
 
   getDataactividades(): void {
-   
-    this.ibartiService.getTasksEditActivity(this.task)
-      .subscribe(
-        (response: any) => this.actividades = response,
-        (error: string) => (console.log('Ups! we have an error: ', error))
-    );
-    
+   if(this.task){
+      this.ibartiService.getTasksEditActivity(this.task)
+        .subscribe(
+          (response: any) => this.actividades = response,
+          (error: string) => (console.log('Ups! we have an error: ', error))
+      );
+    }
   }
   setForm(): void {
     this.createTaskA= this.fb.group({
