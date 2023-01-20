@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment as env } from '../../../environments/environment';
@@ -76,15 +76,15 @@ export class IbartiService  {
   getinfoexcel(task:TaskExcel) {
     console.log(`POlicia :${this.formatearFecha(task.fecha_desde)}`);
     return this.http
-      .get<Array<{}>>(`${this.URL}/export/?usuario=${env.USER_DEFAULT}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`)
+      .get<Array<{}>>(`${this.URL}/export/?usuario=${getLocalStorage('userIbartiKanban')}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`)
       .pipe(map(data => data), catchError(this.handleError));
       
   }
   getreport(task:TaskExcel) {
     //  const headers= new HttpHeaders().set('Content-Type','application/json');
-    //  return this.http.get(`${this.URL}/export/?usuario=${env.USER_DEFAULT}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`);
+    //  return this.http.get(`${this.URL}/export/?usuario=${getLocalStorage('userIbartiKanban')}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`);
     const dowloandlink = document.createElement('a');
-    dowloandlink.href=`${this.URL}/export/?usuario=${env.USER_DEFAULT}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`;
+    dowloandlink.href=`${this.URL}/export/?usuario=${getLocalStorage('userIbartiKanban')}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`;
     dowloandlink.setAttribute('download', 'report-tareas');
     document.body.appendChild(dowloandlink);
     dowloandlink.click();

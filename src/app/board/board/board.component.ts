@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IbartiService, ListSchema, TaskSchema, Users } from './../../core';
 import { TaskService } from 'src/app/core/services/task.service';
-import { CdkConnectedOverlay, ConnectedPosition } from '@angular/cdk/overlay';
 import { getLocalStorage } from 'src/app/utils/localStorage';
 import { CreateTaskComponent } from '../components/create-task/create-task.component';
 import { MatDialog } from '@angular/material/dialog';

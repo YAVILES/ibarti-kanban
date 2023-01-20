@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TableUtil } from "src/app/board/components/createexcel/tableutil";
 import * as XLSX from "xlsx";
+import { getLocalStorage } from 'src/app/utils/localStorage';
 type DropdownObject = {
   codigo: string;
   cedula?: string;
@@ -93,7 +94,7 @@ export class CreateexcelComponent implements OnInit {
 
   setForm(): void {
     this.createTask = this.fb.group({
-      usuario: `${env.USER_DEFAULT}`,
+      usuario: getLocalStorage('userIbartiKanban'),
       fecha_desde:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"],
       fecha_hasta:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"]
     });

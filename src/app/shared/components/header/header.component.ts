@@ -8,6 +8,7 @@ import { TaskService } from 'src/app/core/services/task.service';
 import { IbartiService } from 'src/app/core/services/ibarti.service';
 import { environment as env } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { getLocalStorage } from 'src/app/utils/localStorage';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -41,7 +42,7 @@ export class HeaderComponent implements OnInit {
   }
   setForm(): void {
     this.createTaskA= this.fb.group({
-      usuario: `${env.USER_DEFAULT}`,
+      usuario: getLocalStorage('userIbartiKanban'),
       actividad: ["", Validators.required],
       codigo: ["", Validators.required],
       editada:["1"],    
