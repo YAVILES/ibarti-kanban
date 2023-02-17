@@ -34,7 +34,7 @@
   </mat-form-field>
   <br>
   <mat-form-field appearance="fill" color="accent">
-    <h3><mat-label>Vencimiento</mat-label></h3>
+    <h3><mat-label>Vencimiento:<p><strong></strong> {{ data.task.fec_vencimiento}}</p> </mat-label></h3>
     <input name="fec_vencimiento" formControlName="fec_vencimiento" matInput [matDatepicker]="picker">
     <mat-hint>YYYY/MM/DD</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>

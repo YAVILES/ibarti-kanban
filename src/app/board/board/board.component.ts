@@ -63,6 +63,7 @@ export class BoardComponent implements OnInit {
         novedad: event.novedad,
         cod_usuario: event.cod_usuario,
         cod_nov_status_kanban: event.cod_nov_status_kanban,
+        fec_cierre:event.fec_cierre,
       };
       if(event.listId){
         this.listId = event.listId;
