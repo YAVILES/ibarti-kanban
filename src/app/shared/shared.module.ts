@@ -16,6 +16,8 @@ const declarables = [ HeaderComponent, FooterComponent, ModalComponent ];
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
     MaterialCdkModule
   ],
   exports: declarables,

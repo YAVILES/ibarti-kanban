@@ -18,6 +18,7 @@ interface TaskEdit {
   codigo: string, // Codigo de la tarea (novedad)
   fec_vencimiento:  string,
   status: string ,// Estatus kanban de la tarea (novedad.cod_nov_status_kanban)
+ 
   }
 interface TaskActividad {
   usuario: string, // Código de usuario en sesión

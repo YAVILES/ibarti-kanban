@@ -77,7 +77,7 @@ export class TaskService {
         return element;
       });
     }
-    this.loadInitialData();
+    // this.loadInitialData();
   }
   removeTask(dataId: string, list: ListSchema): void {
     const elementsIndex = this.list.findIndex(

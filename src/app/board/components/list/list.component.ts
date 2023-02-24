@@ -78,7 +78,8 @@ export class ListComponent implements OnInit {
         cod_usuario: task.cod_usuario, 
         codigo: task.codigo,
         fec_vencimiento:task.fec_vencimiento,
-        status: task.cod_nov_status_kanban 
+        status: task.cod_nov_status_kanban ,
+        
       })
       .subscribe(
         (response: any) => (this.toastr.info("Datos Guardados con Exitos!.")),
