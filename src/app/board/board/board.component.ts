@@ -81,8 +81,8 @@ export class BoardComponent implements OnInit {
       } else {
         this.task = initialValue;
       }
+    }
   }
-
   hideOverlay(): void {
     this.isOverlayDisplayed = false;
   }
