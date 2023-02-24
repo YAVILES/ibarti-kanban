@@ -42,8 +42,8 @@
         <p *ngIf="task?.respuesta"><strong>Respuesta:</strong> {{ task.respuesta }}</p>
         <p><strong>Usuario:</strong> {{ task.usuario != "" && task.usuario != null ? task.usuario : "Sin Asignar" }}</p>
         <p class="task__date"><strong>Fecha de Vencimiento:</strong> {{ task.fec_vencimiento | date:'yyyy-MM-dd'}}</p>
-        <p class="task__date"><strong>Fecha Asignada:</strong> {{ task.fec_asignacion | date:'yyyy-MM-dd'}}</p>
-        <p class="task__date"><strong>Fecha de Cierre:</strong> {{ task.fec_cierre | date:'yyyy-MM-dd'}}</p>
+        <p class="task__date"><strong>Fecha Asignada:</strong> {{ task.fec_asignacion | date:'yyyy-MM-dd hh:mm:ss'}}</p>
+        <p class="task__date"><strong>Fecha de Cierre:</strong> {{ task.fec_cierre | date:'yyyy-MM-dd hh:mm:ss'}}</p>
         <p class="text"><strong>Horas Hombres:</strong> {{ task.horas_hombres != "" && task.horas_hombres != null ? task.horas_hombres : "0" }}</p>
       
       </div>
