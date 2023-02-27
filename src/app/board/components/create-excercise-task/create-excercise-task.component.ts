@@ -11,7 +11,7 @@ import { TaskService } from 'src/app/core/services/task.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment as env } from '../../../../environments/environment';
 import { DatePipe } from '@angular/common';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 type DropdownObject = {
   codigo: string;
@@ -43,13 +43,15 @@ export class CreateExcerciseTaskComponent implements OnInit {
   id: string = "";
   errort: boolean=false;
   status:string | undefined = "";
-  actividad:string | undefined = ""; ;
+  actividad:string | undefined = "";
+  guardando: boolean = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {task:TaskSchema, taskacti: Actividades, listId: string, users: Users[]},
     private fb: FormBuilder,public toastr:ToastrService,
     private _ngZone: NgZone,private miDatePipe: DatePipe,
     private tasksService: TaskService,
-    private ibartiService: IbartiService
+    private ibartiService: IbartiService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -75,16 +77,20 @@ export class CreateExcerciseTaskComponent implements OnInit {
 
   onFormAdd(): void {
     console.log(`ojo${this.data.task}`);
+    this.guardando = true;
    if (this.createTaskA.valid && this.data.task && this.data.listId){
       this.ibartiService.CrearExcerciseTask(this.createTaskA.value)
       .subscribe(
         (data): void => {
           this.toastr.info("Datos Guardados con Exitos!.");
-          this.tasksService.updateTask(this.createTaskA.value, this.data.listId ?? '')
+          this.tasksService.updateTask(this.createTaskA.value, this.data.listId ?? '');
+          this.dialog.closeAll();
+          this.guardando = false
         },
         error => {
           this.toastr.error("Error , Cargando Datos del Task");
           this.errort=true;
+          this.guardando = false
         });
     }
   }
