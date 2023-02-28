@@ -14,6 +14,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {MatListModule } from '@angular/material/list';
 import {MatExpansionModule} from '@angular/material/expansion'; 
 import {MatTableModule} from '@angular/material/table';
+import {MatRadioModule} from '@angular/material/radio'; 
+import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
 //CDK
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -37,7 +39,9 @@ const components = [
   TextFieldModule,
   MatDialogModule,
   PortalModule,
-  MatIconModule
+  MatIconModule,
+  MatRadioModule,
+  MatSlideToggleModule
 ];
 
 @NgModule({

@@ -57,6 +57,7 @@ export class CreateexcelComponent implements OnInit {
   @Input() connectedOverlay!: CdkConnectedOverlay;
   @Input() users: Users[] = [];
   fechavence :string="" ;
+  isChecked :boolean= false;
   formText: string = "Editar";
   createTask!: FormGroup;
   selectedUser: string | undefined = "";
@@ -73,7 +74,8 @@ export class CreateexcelComponent implements OnInit {
     private fb: FormBuilder,public toastr:ToastrService,
     private _ngZone: NgZone,private miDatePipe: DatePipe,
     private tasksService: TaskService,
-    private ibartiService: IbartiService
+    private ibartiService: IbartiService,
+   
   ) { }
 
   ngOnInit(): void {
@@ -95,9 +97,10 @@ export class CreateexcelComponent implements OnInit {
     this.createTask = this.fb.group({
       usuario: `${env.USER_DEFAULT}`,
       fecha_desde:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"],
-      fecha_hasta:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"]
+      fecha_hasta:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"],
+      detalle :[this.data.task?.respuesta ? this.data.task.respuesta: false],
     });
-    //this.getDatausuarios();
+    console.log("Valor Detalle"+ this.createTask.controls['detalle'].value);
   }
 
   onFormAdd(): void {
@@ -173,6 +176,10 @@ export class CreateexcelComponent implements OnInit {
     document.body.appendChild(dowloandlink);
     dowloandlink.click();
   }
-  
+  changed(enable: boolean){
+    if (enable) {
+      this.createTask.controls['detalle'].disable;
+    } 
+  }
   
   }
