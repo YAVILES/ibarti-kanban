@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -16,7 +16,9 @@ export class TaskService {
   private readonly boardUsers = new BehaviorSubject<Users[]>([]);
   readonly users$ = this.boardUsers.asObservable();
   readonly getBoardUsers$ = this.users$.pipe(map((users) => users));
+  @Output() change: EventEmitter<any> = new EventEmitter();
   public listauasuario: Users[]=[];
+  
   constructor(private ibartiService: IbartiService, public toastr: ToastrService) {
     this.loadInitialData();
     this.loadInitialDataUsuario();
@@ -70,14 +72,16 @@ export class TaskService {
       const elementsIndex = this.list.findIndex(
         (element) => element.codigo === listId
       );
-      const task = this.list[elementsIndex]?.tasks.map((element) => {
-        if (element.codigo === data.codigo) {
-          element.cod_nov_status_kanban = listId
-        }
-        return element;
-      });
+      let indexTask = this.list[elementsIndex]?.tasks.findIndex((t) => t.codigo == data.codigo);
+      let task = {...this.list[elementsIndex].tasks[indexTask]};
+      task.cod_nov_status_kanban = listId;
+      task.cod_usuario = data.cod_usuario;
+      let user = this.listauasuario.find(u => u.codigo == data.cod_usuario)
+      if(user) task.usuario = `${user.nombre} ${user?.apellido}`;
+      this.list[elementsIndex].tasks[indexTask] = task;
+      this.change.emit();
     }
-    // this.loadInitialData();
+      // this.loadInitialData();
   }
   removeTask(dataId: string, list: ListSchema): void {
     const elementsIndex = this.list.findIndex(
