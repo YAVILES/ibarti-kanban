@@ -38,14 +38,13 @@
     <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
     <mat-datepicker #picker1></mat-datepicker>
   </mat-form-field>
- 
+  <br>
   <mat-slide-toggle
   formControlName="detalle"
-   [(ngModel)]="isChecked"
-   (change)="changed($event.checked)">
-     Reporte detalle ? {{isChecked}}
-</mat-slide-toggle>
-       
+  [(ngModel)]="isChecked"
+  (change)="changed($event.checked)">
+    Aplica Detalle
+  </mat-slide-toggle>
   
 </div>
 
