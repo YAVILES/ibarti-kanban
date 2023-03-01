@@ -34,6 +34,7 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
     this.getDatausuarios();
     this.getDataStored();
+    this.taskService.change.subscribe(() =>this.getDataStored());
   }
 
   getDatausuarios(): void {

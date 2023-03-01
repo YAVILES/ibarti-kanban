@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {  NgZone} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ListSchema, TaskSchema } from './../../../core';
+import { ListSchema, TaskSchema, Users } from './../../../core';
 import { IbartiService } from 'src/app/core/services/ibarti.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { TaskService } from 'src/app/core/services/task.service';
@@ -22,7 +22,7 @@ export class ListComponent implements OnInit {
   @Input() task?: TaskSchema;
   @Output() editTask: EventEmitter<TaskSchema> = new EventEmitter();
   createTask!: FormGroup;
-  users: TaskSchema[] = [ ];
+  users: Users[] = [ ];
   
   constructor(  private fb: FormBuilder,public toastr:ToastrService,
     private _ngZone: NgZone, public tasksService: TaskService,public ibartiService:IbartiService) {}
@@ -82,7 +82,14 @@ export class ListComponent implements OnInit {
         
       })
       .subscribe(
-        (response: any) => (this.toastr.info("Datos Guardados con Exitos!.")),
+        (response: any) => {
+          this.toastr.info("Datos Guardados con Exitos!.");
+          const index = this.list.tasks.findIndex(t => t.codigo == task.codigo);
+          this.list.tasks[index].cod_nov_status_kanban = task.cod_nov_status_kanban;
+          this.list.tasks[index].cod_usuario = task.cod_usuario;
+          let user = this.users.find(u => u.codigo == task.cod_usuario);
+          if(user) this.list.tasks[index].usuario = `${user.nombre} ${user.apellido}`;
+        },
         (error: string) => (this.toastr.error("Error al Cargar los datos."))
       );
     }
