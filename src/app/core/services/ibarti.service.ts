@@ -11,6 +11,10 @@ interface TaskExcel {
   fecha_hasta: string ,// Estatus kanban de la tarea (novedad.cod_nov_status_kanban)
   detalle:boolean,
   }
+interface tiponovedad{
+  codigo:string,
+  descripcion:string,
+}
 interface TaskEdit {
   usuario: string, // Código de usuario en sesión
   cod_usuario: string, // Codigo de usuario asignado a la tarea (novedad)
@@ -47,7 +51,11 @@ export class IbartiService  {
       .get<Array<{}>>(`${this.URL}/status/?usuario=${env.USER_DEFAULT}`)
       .pipe(map(data => data), catchError(this.handleError));
   }
-
+  gettipos() {
+    return this.http
+      .get<Array<{}>>(`${this.URL}/consultartipo/?usuario=${env.USER_DEFAULT}`)
+      .pipe(map(data => data), catchError(this.handleError));
+  }
   getUsuarios() {
     return this.http
       .get<Array<{}>>(`${this.URL}/users/?usuario=${env.USER_DEFAULT}`)
