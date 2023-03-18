@@ -56,7 +56,12 @@ export class HeaderComponent implements OnInit {
     if(this.foods){
        this.ibartiService.gettipos()
          .subscribe(
-           (response: any) => this.foods = response,
+           (response: any) => {
+            this.foods = response;
+            if(this.foods.length > 0){
+              this.selectedValue = this.foods[0]["codigo"];
+            }
+          },
            (error: string) => (console.log('Ups! we have an error: ', error))
        );
      }
