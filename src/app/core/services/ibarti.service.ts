@@ -10,6 +10,7 @@ interface TaskExcel {
   fecha_desde:  string,
   fecha_hasta: string ,// Estatus kanban de la tarea (novedad.cod_nov_status_kanban)
   detalle:boolean,
+  tnovedad: string,
   }
 interface tiponovedad{
   codigo:string,
@@ -91,7 +92,8 @@ export class IbartiService  {
     //  const headers= new HttpHeaders().set('Content-Type','application/json');
     //  return this.http.get(`${this.URL}/export/?usuario=${env.USER_DEFAULT}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`);
     const dowloandlink = document.createElement('a');
-    dowloandlink.href=`${this.URL}/export/?usuario=${env.USER_DEFAULT}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}&detalle=${task.detalle}`;
+    
+    dowloandlink.href=`${this.URL}/export/?usuario=${env.USER_DEFAULT}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}&detalle=${task.detalle}&tiponk=${task.tnovedad}`;
     dowloandlink.setAttribute('download', 'report-tareas');
     document.body.appendChild(dowloandlink);
     dowloandlink.click();

@@ -78,11 +78,12 @@ export class HeaderComponent implements OnInit {
   handleEditTask(task: TaskSchema) {
     
     const dialogRef = this.dialog.open(CreateexcelComponent, {
-      data: {task: this.task, listId: this.list?.codigo, users: this.users},
+      data: {task: this.task, listId: this.list?.codigo, users: this.users,tipoN:this.selectedValue},
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(`Dialog result: ${result}`);
     });
+   
   }
   
 }

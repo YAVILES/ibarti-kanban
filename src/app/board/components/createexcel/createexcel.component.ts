@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, NgZone, OnInit, Output, ViewChi
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { TaskSchema } from 'src/app/core/';
+import { TaskSchema, tiponovedad } from 'src/app/core/';
 import { Users } from 'src/app/core/models/users';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
@@ -64,13 +64,14 @@ export class CreateexcelComponent implements OnInit {
   id: string = "";
   errort: boolean=false;
   status:string | undefined = "";
+  valornovedad:string | undefined = "";
   displayedColumns: string[] = ["position", "name", "weight", "symbol"];
   matColumns: string[] = ["name", "symbol"];
   dataSource = ELEMENT_DATA;
   reverseDataSource = [...ELEMENT_DATA].reverse();
   PeriodicElement:any;
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {task: TaskSchema, listId: string, users: Users[]},
+    @Inject(MAT_DIALOG_DATA) public data: {task: TaskSchema, listId: string, users: Users[],tipoN:string},
     private fb: FormBuilder,public toastr:ToastrService,
     private _ngZone: NgZone,private miDatePipe: DatePipe,
     private tasksService: TaskService,
@@ -86,7 +87,8 @@ export class CreateexcelComponent implements OnInit {
       this.formText = 'Crear';
       this.selectedUser = this.data.task.cod_usuario;
       this.status = this.data.task.nov_status_kanban;
-       
+      
+      
     } else {
       this.formText = 'Crear';
     } 
@@ -99,8 +101,10 @@ export class CreateexcelComponent implements OnInit {
       fecha_desde:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"],
       fecha_hasta:[this.data.task?.fec_vencimiento ? this.data.task.fec_vencimiento: "null"],
       detalle :[this.data.task?.respuesta ? this.data.task.respuesta: false],
+      tnovedad:[this.data.tipoN],
     });
     console.log("Valor Detalle"+ this.createTask.controls['detalle'].value);
+    
   }
 
   onFormAdd(): void {
@@ -158,6 +162,7 @@ export class CreateexcelComponent implements OnInit {
   exportArray() {
     console.log("Descargando..");
     const filename = 'reporte_${Math.random()}.xlsx' ;
+    console.log("Valor del Tipo"+ this.createTask.controls['tnovedad'].value);
     this.ibartiService.getreport(this.createTask.value).subscribe(response =>{
       // this.manageExcelfile(response,filename);
       this.toastr.info("Archivo Excel Generado con exito!.");
