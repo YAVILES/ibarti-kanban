@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { ListSchema, TaskSchema, Histori} from './../../../core';
+import { ListSchema, TaskSchema, Histori,tiponovedad} from './../../../core';
 import { CreateexcelComponent } from 'src/app/board/components/createexcel/createexcel.component';
 import { FormBuilder, FormGroup,Validators} from '@angular/forms';
 import { listaactividades} from './../../../core/models/listaactividades';
@@ -8,26 +8,36 @@ import { TaskService } from 'src/app/core/services/task.service';
 import { IbartiService } from 'src/app/core/services/ibarti.service';
 import { ToastrService } from 'ngx-toastr';
 import { getLocalStorage } from 'src/app/utils/localStorage';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
+
 export class HeaderComponent implements OnInit {
   @Input() task!: TaskSchema;
+  @Input() tiponov!:tiponovedad;
   @Output() editTask: EventEmitter<TaskSchema> = new EventEmitter();
   selectedactividad: string | undefined = "";
+  selectedValue?: string = "";
   createTaskA!: FormGroup;
   actividades:listaactividades[]= [];
+  foods: tiponovedad[] = [];
   @Input() list?: ListSchema;
   @Input() users: Histori[] = [];
+  public disabledSelectType: boolean = false;
+  
+
   constructor(public dialog: MatDialog, public tasksService: TaskService,private ibartiService: IbartiService, private fb:FormBuilder,public toastr:ToastrService) {}
 
-
+  
   ngOnInit(): void {
     this.getDataactividades();
+    this.gettiponovedades();
     this.selectedactividad = '';
     this.setForm();
+    
   }
 
   getDataactividades(): void {
@@ -39,6 +49,22 @@ export class HeaderComponent implements OnInit {
       );
     }
   }
+  gettiponovedades(): void {
+    if(this.foods){
+       this.ibartiService.gettipos()
+         .subscribe(
+           (response: any) => {
+            this.foods = response;
+            if(this.foods.length > 0){
+              this.selectedValue = this.foods[0]["codigo"];
+              this.changeType();
+            }
+          },
+           (error: string) => (console.log('Ups! we have an error: ', error))
+       );
+     }
+     
+   }
   setForm(): void {
     this.createTaskA= this.fb.group({
       usuario: getLocalStorage('userIbartiKanban'),
@@ -50,11 +76,17 @@ export class HeaderComponent implements OnInit {
   handleEditTask(task: TaskSchema) {
     
     const dialogRef = this.dialog.open(CreateexcelComponent, {
-      data: {task: this.task, listId: this.list?.codigo, users: this.users},
+      data: {task: this.task, listId: this.list?.codigo, users: this.users,tipoN:this.selectedValue},
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(`Dialog result: ${result}`);
     });
+   
   }
   
+  async changeType(){
+    this.disabledSelectType = true;
+    await this.tasksService.updateTypeNew(this.selectedValue);
+    this.disabledSelectType = false;
+  }
 }

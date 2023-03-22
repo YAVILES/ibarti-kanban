@@ -18,7 +18,8 @@ export class TaskService {
   readonly getBoardUsers$ = this.users$.pipe(map((users) => users));
   @Output() change: EventEmitter<any> = new EventEmitter();
   public listauasuario: Users[]=[];
-  
+  public typeNew: string = "";
+
   constructor(private ibartiService: IbartiService, public toastr: ToastrService) {
     this.loadInitialData();
     this.loadInitialDataUsuario();
@@ -31,7 +32,7 @@ export class TaskService {
         this.toastr.error(`${status.error}`);
       }else{
         if (!!status) {
-          this.ibartiService.getTasks().subscribe((tasks: any[]) => {
+          this.ibartiService.getTasks(this.typeNew).subscribe((tasks: any[]) => {
             if (!!tasks) {
               for (let index = 0; index < status.length; index++) {
                 status[index].tasks = tasks.filter(t => t.cod_nov_status_kanban == status[index].codigo);
@@ -91,5 +92,13 @@ export class TaskService {
       (task) => task.codigo !== dataId
     );
     this.list[elementsIndex].tasks = tasks;
+  }
+
+  async updateTypeNew(typeNew?: string){
+    if(typeNew){
+      this.typeNew = typeNew;
+      await this.loadInitialData();
+      this.change.emit();
+    }
   }
 }

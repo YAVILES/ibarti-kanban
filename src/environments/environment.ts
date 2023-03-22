@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  API: 'http://69.10.42.61/api-ibarti-demo'
+  API: 'http://localhost/api-ibarti2',
+  USER_DEFAULT: '1234'
 };
 
 /*

@@ -12,7 +12,12 @@ interface TaskExcel {
   fecha_desde:  string,
   fecha_hasta: string ,// Estatus kanban de la tarea (novedad.cod_nov_status_kanban)
   detalle:boolean,
+  tnovedad: string,
   }
+interface tiponovedad{
+  codigo:string,
+  descripcion:string,
+}
 interface TaskEdit {
   usuario: string, // Código de usuario en sesión
   cod_usuario: string, // Codigo de usuario asignado a la tarea (novedad)
@@ -49,7 +54,11 @@ export class IbartiService  {
       .get<Array<{}>>(`${this.URL}/status/?usuario=${getLocalStorage('userIbartiKanban')}`)
       .pipe(map(data => data), catchError(this.handleError));
   }
-
+  gettipos() {
+    return this.http
+      .get<Array<{}>>(`${this.URL}/consultartipo/?usuario=${env.USER_DEFAULT}`)
+      .pipe(map(data => data), catchError(this.handleError));
+  }
   getUsuarios() {
     return this.http
       .get<Array<{}>>(`${this.URL}/users/?usuario=${getLocalStorage('userIbartiKanban')}`)
@@ -86,7 +95,7 @@ export class IbartiService  {
     //  const headers= new HttpHeaders().set('Content-Type','application/json');
     //  return this.http.get(`${this.URL}/export/?usuario=${getLocalStorage('userIbartiKanban')}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}`);
     const dowloandlink = document.createElement('a');
-    dowloandlink.href=`${this.URL}/export/?usuario=${getLocalStorage('userIbartiKanban')}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}&detalle=${task.detalle}`;
+    dowloandlink.href=`${this.URL}/export/?usuario=${getLocalStorage('userIbartiKanban')}&fecha_desde=${this.formatearFecha(task.fecha_desde)}&fecha_hasta=${this.formatearFecha(task.fecha_hasta)}&detalle=${task.detalle}&tiponk=${task.tnovedad}`;
     dowloandlink.setAttribute('download', 'report-tareas');
     document.body.appendChild(dowloandlink);
     dowloandlink.click();
@@ -99,9 +108,9 @@ export class IbartiService  {
       .pipe(map(data => data), catchError(this.handleError));
   }
   
-  getTasks() {
+  getTasks(type: string) {
     return this.http
-      .get<Array<{}>>(`${this.URL}/news/?usuario=${getLocalStorage('userIbartiKanban')}`)
+      .get<Array<{}>>(`${this.URL}/news/?usuario=${getLocalStorage('userIbartiKanban')}&tipo=${type}`)
       .pipe(map(data => data), catchError(this.handleError));
   }
   /* Handle request error */

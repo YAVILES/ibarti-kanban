@@ -1,6 +1,15 @@
 <mat-toolbar color="accent" class="toolbar">
-  <span>Tablero Kanban Ibarti</span>
+  <span>Tablero Kanban Ibarti ({{selectedValue}}) </span>
   <span class="toolbar__spacer"></span>
+  <mat-form-field appearance="fill">
+    <mat-label><h1>Tipo Novedad:</h1></mat-label>
+    <mat-select [(ngModel)]="selectedValue" name="food" (selectionChange)="changeType()" [disabled]="disabledSelectType">
+      <mat-option *ngFor="let food of foods" [value]="food.codigo">
+        {{food.descripcion}}
+      </mat-option>
+    </mat-select>
+    
+  </mat-form-field>
   <button
       mat-raised-button
       color="accent"
