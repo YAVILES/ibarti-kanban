@@ -23,13 +23,13 @@ export class HeaderComponent implements OnInit {
   @Input() tiponov!:tiponovedad;
   @Output() editTask: EventEmitter<TaskSchema> = new EventEmitter();
   selectedactividad: string | undefined = "";
-  selectedValue:string | undefined = "";
+  selectedValue?: string = "";
   createTaskA!: FormGroup;
   actividades:listaactividades[]= [];
   foods: tiponovedad[] = [];
   @Input() list?: ListSchema;
   @Input() users: Histori[] = [];
-  
+  public disabledSelectType: boolean = false;
   
 
   constructor(public dialog: MatDialog, public tasksService: TaskService,private ibartiService: IbartiService, private fb:FormBuilder,public toastr:ToastrService) {}
@@ -60,6 +60,7 @@ export class HeaderComponent implements OnInit {
             this.foods = response;
             if(this.foods.length > 0){
               this.selectedValue = this.foods[0]["codigo"];
+              this.changeType();
             }
           },
            (error: string) => (console.log('Ups! we have an error: ', error))
@@ -86,4 +87,9 @@ export class HeaderComponent implements OnInit {
    
   }
   
+  async changeType(){
+    this.disabledSelectType = true;
+    await this.tasksService.updateTypeNew(this.selectedValue);
+    this.disabledSelectType = false;
+  }
 }

@@ -105,9 +105,9 @@ export class IbartiService  {
       .get<Array<{}>>(`${this.URL}/historial/?usuario=${env.USER_DEFAULT}&codigo=${task.codigo}`)
       .pipe(map(data => data), catchError(this.handleError));
   }
-  getTasks() {
+  getTasks(type: string) {
     return this.http
-      .get<Array<{}>>(`${this.URL}/news/?usuario=${env.USER_DEFAULT}`)
+      .get<Array<{}>>(`${this.URL}/news/?usuario=${env.USER_DEFAULT}&tipo=${type}`)
       .pipe(map(data => data), catchError(this.handleError));
   }
   /* Handle request error */
