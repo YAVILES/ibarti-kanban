@@ -9,6 +9,7 @@
     <strong>{{ list.descripcion }}</strong>
   </h3>
   <div class="list__tasks">
+    <h1 *ngIf="list.tasks.length == 0">Sin tareas</h1>
     <app-task
       *ngFor="let task of list.tasks"
       [task]="task"
