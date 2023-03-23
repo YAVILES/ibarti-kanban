@@ -3,6 +3,6 @@
   <mat-spinner *ngIf="loading" class="mat-spinner"></mat-spinner>
 
   <section class="board__list" *ngIf="!loading">
-    <app-list *ngFor="let list of lists" [list]="list" (editTask)="displayOverlay($event)"></app-list>
+    <app-list *ngFor="let list of lists" [list]="list" [lists]="lists" (editTask)="displayOverlay($event)"></app-list>
   </section>
 </main>
