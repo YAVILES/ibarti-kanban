@@ -84,9 +84,10 @@ export class HeaderComponent implements OnInit {
    
   }
   
-  async changeType(){
+  changeType(){
     this.disabledSelectType = true;
-    await this.tasksService.updateTypeNew(this.selectedValue);
-    this.disabledSelectType = false;
+    this.tasksService.updateTypeNew(this.selectedValue).finally(() => {
+      this.disabledSelectType = false;
+    });
   }
 }
