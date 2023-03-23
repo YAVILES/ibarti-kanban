@@ -42,6 +42,7 @@ export class TaskService {
           });
         }
       }
+      this.change.emit({complete: true});
     });
   }
 
@@ -80,7 +81,7 @@ export class TaskService {
       let user = this.listauasuario.find(u => u.codigo == data.cod_usuario)
       if(user) task.usuario = `${user.nombre} ${user?.apellido}`;
       this.list[elementsIndex].tasks[indexTask] = task;
-      this.change.emit();
+      this.change.emit({complete: true});
     }
       // this.loadInitialData();
   }
@@ -95,10 +96,10 @@ export class TaskService {
   }
 
   async updateTypeNew(typeNew?: string){
+    this.change.emit({complete: false});
     if(typeNew){
       this.typeNew = typeNew;
       await this.loadInitialData();
-      this.change.emit();
     }
     return typeNew;
   }

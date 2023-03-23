@@ -16,6 +16,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatTableModule} from '@angular/material/table';
 import {MatRadioModule} from '@angular/material/radio'; 
 import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 //CDK
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -41,7 +42,8 @@ const components = [
   PortalModule,
   MatIconModule,
   MatRadioModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatProgressSpinnerModule 
 ];
 
 @NgModule({
