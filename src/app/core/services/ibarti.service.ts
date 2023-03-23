@@ -56,7 +56,7 @@ export class IbartiService  {
   }
   gettipos() {
     return this.http
-      .get<Array<{}>>(`${this.URL}/consultartipo/?usuario=${env.USER_DEFAULT}`)
+      .get<Array<{}>>(`${this.URL}/consultartipo/?usuario=${getLocalStorage('userIbartiKanban')}`)
       .pipe(map(data => data), catchError(this.handleError));
   }
   getUsuarios() {
