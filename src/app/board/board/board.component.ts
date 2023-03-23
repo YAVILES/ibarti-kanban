@@ -25,6 +25,7 @@ export class BoardComponent implements OnInit {
   task: TaskSchema;
   isOverlayDisplayed = false;
   listId!: string;
+  loading: boolean = true;
 
   constructor(private ibartiService: IbartiService, private taskService: TaskService, public dialog: MatDialog) {
     this.task = initialValue;
@@ -34,7 +35,10 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
     this.getDatausuarios();
     // this.getDataStored();
-    this.taskService.change.subscribe(() =>this.getDataStored());
+    this.taskService.change.subscribe((resp) =>{
+      this.loading = true;
+      if(resp.complete == true) this.getDataStored();
+    });
   }
 
   getDatausuarios(): void {
@@ -47,10 +51,17 @@ export class BoardComponent implements OnInit {
   }
 
   getDataStored(): void {
+    this.loading = true;
     this.taskService.getBoardList$
       .subscribe(
-        (response: any) => this.lists = [...response],
-        (error: string) => (console.log('Ups! we have an error: ', error))
+        (response: any) => {
+          this.lists = [...response];
+          this.loading = false;
+        },
+        (error: string) => {
+          console.log('Ups! we have an error: ', error);
+          this.loading = false;
+        }
         
     );
     

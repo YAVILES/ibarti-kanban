@@ -37,7 +37,9 @@ export class HeaderComponent implements OnInit {
     this.gettiponovedades();
     this.selectedactividad = '';
     this.setForm();
-    
+    this.tasksService.change.subscribe((resp) =>{
+       this.disabledSelectType = !resp.complete;
+    });
   }
 
   getDataactividades(): void {
@@ -85,9 +87,6 @@ export class HeaderComponent implements OnInit {
   }
   
   changeType(){
-    this.disabledSelectType = true;
-    this.tasksService.updateTypeNew(this.selectedValue).finally(() => {
-      this.disabledSelectType = false;
-    });
+    this.tasksService.updateTypeNew(this.selectedValue);
   }
 }
