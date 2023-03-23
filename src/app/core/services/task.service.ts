@@ -100,5 +100,6 @@ export class TaskService {
       await this.loadInitialData();
       this.change.emit();
     }
+    return typeNew;
   }
 }
