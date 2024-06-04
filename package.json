@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production --base-href=/ib_oesvica/kanban/ --aot",
+    "build": "ng build --configuration production --base-href=/oesvica/kanban/ --aot",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
