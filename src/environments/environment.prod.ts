@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  API: 'http://69.10.42.61/api-ibarti2',
+  API: 'http://84.46.244.183/api-ibarti2',
 };
